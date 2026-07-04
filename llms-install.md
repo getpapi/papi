@@ -10,7 +10,7 @@ process and authenticates via browser sign-in (OAuth).
 Run:
 
 ```
-claude mcp add --transport sse papi https://mcp.getpapi.ai/sse
+claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
 A browser tab opens for sign-in. After the connection succeeds:
@@ -78,7 +78,7 @@ Then run `setup`, then `orient`.
 
 ## Any other MCP client
 
-Generic config: streamable HTTP/SSE endpoint at `https://mcp.getpapi.ai/mcp`
+Generic config: streamable HTTP endpoint at `https://mcp.getpapi.ai/mcp`
 with OAuth discovery. If the client only supports static headers, the user
 can create an API key from the dashboard at https://getpapi.ai and supply:
 

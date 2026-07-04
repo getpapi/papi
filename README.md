@@ -11,7 +11,7 @@ You connect it once. From then on, your assistant starts every session knowing w
 PAPI connects to your AI tool as an MCP server. The fastest path is Claude Code:
 
 ```
-claude mcp add --transport sse papi https://mcp.getpapi.ai/sse
+claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
 A browser tab opens, you sign in, and you're connected. Then tell your assistant:
