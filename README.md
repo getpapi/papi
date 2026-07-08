@@ -1,5 +1,7 @@
 # PAPI
 
+<!-- mcp-name: io.github.getpapi/papi -->
+
 [![smithery badge](https://smithery.ai/badge/cathal/getpapi)](https://smithery.ai/servers/cathal/getpapi)
 
 **PAPI keeps you in control of what you're building, across every AI tool you and your team use.**
