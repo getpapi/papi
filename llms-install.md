@@ -1,16 +1,18 @@
 # PAPI installation instructions for AI assistants
 
 You are installing PAPI, an MCP server that gives this project persistent
-planning memory (cycles, plans, builds, reviews). Follow the path for the
-tool you are running in. Prefer the remote transport; it needs no local
-process and authenticates via browser sign-in (OAuth).
+planning memory (cycles, plans, builds, reviews). PAPI is a hosted MCP
+server. There is one install path: connect to the remote transport over
+HTTPS and authenticate via browser sign-in (OAuth). Nothing runs locally,
+and there are no tokens to paste. Follow the section for the tool you are
+running in.
 
 ## Claude Code
 
 Run:
 
 ```
-claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
+claude mcp add --transport sse papi https://mcp.getpapi.ai/sse
 ```
 
 A browser tab opens for sign-in. After the connection succeeds:
@@ -27,8 +29,9 @@ Add to `~/.codex/config.toml`:
 url = "https://mcp.getpapi.ai/mcp"
 ```
 
-Restart Codex. Sign-in happens in the browser on first connection. Then run
-`setup`, then `orient`.
+Restart Codex. If a browser sign-in does not open on first connection, run
+`codex mcp login papi` to start the OAuth flow. Then run `setup`, then
+`orient`.
 
 ## Cursor
 
@@ -78,40 +81,10 @@ Then run `setup`, then `orient`.
 
 ## Any other MCP client
 
-Generic config: streamable HTTP endpoint at `https://mcp.getpapi.ai/mcp`
-with OAuth discovery. If the client only supports static headers, the user
-can create an API key from the dashboard at https://getpapi.ai and supply:
-
-```json
-{
-  "url": "https://mcp.getpapi.ai/mcp",
-  "headers": {
-    "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
-    "x-papi-project-id": "YOUR_PROJECT_ID"
-  }
-}
-```
-
-Both values come from the dashboard's Connect panel. Never commit them.
-
-## Local runtime (advanced)
-
-For users who prefer a local process over the remote transport:
-
-```json
-{
-  "mcpServers": {
-    "papi": {
-      "command": "npx",
-      "args": ["-y", "@papi-ai/server"],
-      "env": {
-        "PAPI_PROJECT_ID": "YOUR_PROJECT_ID",
-        "PAPI_DATA_API_KEY": "YOUR_CONNECTION_TOKEN"
-      }
-    }
-  }
-}
-```
+Point the client at the streamable HTTP endpoint
+`https://mcp.getpapi.ai/mcp` and let it complete OAuth discovery to sign in
+through the browser. Any MCP client with OAuth support connects the same
+way. Then run `setup`, then `orient`.
 
 ## After any install
 

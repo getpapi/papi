@@ -6,10 +6,11 @@
 Restart the tool after adding the config; most clients only read MCP config
 at startup. For Claude Code, `claude mcp list` shows what's registered.
 
-**Sign-in tab never opens (remote install).**
-Your client may not support OAuth discovery. Use the static-header config
-from [install.md](install.md) ("Any other MCP client") with an API key from
-the dashboard's Connect panel.
+**Sign-in tab never opens.**
+Your client may not support OAuth discovery, or the browser handoff was
+blocked. In Codex, run `codex mcp login papi` to start the flow manually.
+Otherwise connect from a client with OAuth support (Claude Code, Cursor,
+VS Code, Windsurf) — see [install.md](install.md).
 
 **401 or "unauthorized" on every call.**
 The token is missing, expired, or revoked. Create a fresh key in the
@@ -34,8 +35,7 @@ writes to the wrong one. Fixes, in order:
 
 **"No project specified and no default configured."**
 PAPI refuses to guess which project to write to. Pass `project=<id>` on the
-call, set `PAPI_PROJECT_ID` (local) or the `x-papi-project-id` header
-(remote), or run `project_switch`.
+call, or run `project_switch` to set the default for the session and folder.
 
 **`setup` says a project already exists.**
 Setup is idempotent per folder and name; it returns the existing project
@@ -56,5 +56,5 @@ dashboard header against `orient`'s project name.
 
 ## Still stuck?
 
-Open an issue on this repo with the tool you're using, the transport
-(remote or local), and what you tried. Don't include your token.
+Open an issue on this repo with the tool you're using and what you tried.
+Don't include any tokens or credentials.
