@@ -34,7 +34,7 @@ Using Cursor, VS Code, Windsurf, or Codex? See [docs/install.md](docs/install.md
 - **strategy reviews** every few cycles step back and check direction, not just velocity.
 - **A dashboard** at [getpapi.ai](https://getpapi.ai) shows your cycles, board, and decisions, so you can see the state of the project without asking.
 
-The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 280+ cycles.
+The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built and dogfooded on itself over hundreds of PAPI cycles.
 
 ## Documentation
 
@@ -48,6 +48,6 @@ The methodology is the product: a plan, build, review, release loop your assista
 ## Links
 
 - Website and dashboard: [getpapi.ai](https://getpapi.ai)
-- This repo is documentation only. The PAPI engine is closed source; the `@papi-ai/server` package on npm is the supported local runtime.
+- This repo is documentation only. The PAPI engine is closed source; you connect to it as a hosted MCP server at `mcp.getpapi.ai`. There is nothing to run locally.
 
 Questions or stuck? Open an issue here.

@@ -1,12 +1,9 @@
 # Installing PAPI
 
-PAPI connects to your AI tool as an MCP server. There are two transports:
-
-- **Remote (recommended).** Your tool talks to `mcp.getpapi.ai` over HTTPS.
-  Nothing runs on your machine, sign-in happens in the browser, and updates
-  reach you automatically.
-- **Local (advanced).** Your tool runs `@papi-ai/server` from npm locally.
-  Useful when you want the process under your own control.
+PAPI connects to your AI tool as an MCP server. It is a hosted server: your
+tool talks to `mcp.getpapi.ai` over HTTPS, nothing runs on your machine,
+sign-in happens in the browser (OAuth), and updates reach you automatically.
+There are no tokens to paste and nothing to install locally.
 
 Pick your tool below. Every path ends the same way: run `setup` once, then
 `orient` at the start of every session.
@@ -85,44 +82,13 @@ Add to `~/.codex/config.toml`:
 url = "https://mcp.getpapi.ai/mcp"
 ```
 
+Restart Codex. If a browser sign-in does not open on first connection, run
+`codex mcp login papi` to start the OAuth flow.
+
 ## Any other MCP client
 
-Use the generic endpoint `https://mcp.getpapi.ai/mcp`. Clients that support
-OAuth discovery will walk you through sign-in. Clients that only support
-static headers can use an API key from the [getpapi.ai](https://getpapi.ai)
-Connect panel:
-
-```json
-{
-  "url": "https://mcp.getpapi.ai/mcp",
-  "headers": {
-    "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
-    "x-papi-project-id": "YOUR_PROJECT_ID"
-  }
-}
-```
-
-Keep the token out of version control. It is revocable from the dashboard.
-
-## Local runtime (advanced)
-
-Runs the server on your machine via npx. You need a project id and API key
-from the dashboard's Connect panel.
-
-```json
-{
-  "mcpServers": {
-    "papi": {
-      "command": "npx",
-      "args": ["-y", "@papi-ai/server"],
-      "env": {
-        "PAPI_PROJECT_ID": "YOUR_PROJECT_ID",
-        "PAPI_DATA_API_KEY": "YOUR_CONNECTION_TOKEN"
-      }
-    }
-  }
-}
-```
+Use the generic endpoint `https://mcp.getpapi.ai/mcp`. Any MCP client with
+OAuth support will walk you through browser sign-in on first connection.
 
 ## After installing
 
