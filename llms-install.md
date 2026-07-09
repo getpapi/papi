@@ -12,7 +12,7 @@ running in.
 Run:
 
 ```
-claude mcp add --transport sse papi https://mcp.getpapi.ai/sse
+claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
 A browser tab opens for sign-in. After the connection succeeds:

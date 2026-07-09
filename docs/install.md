@@ -13,7 +13,7 @@ Pick your tool below. Every path ends the same way: run `setup` once, then
 Paste this into a terminal (works from any directory):
 
 ```
-claude mcp add --transport sse papi https://mcp.getpapi.ai/sse
+claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
 A browser tab opens so you can sign in. Then in Claude Code:
@@ -24,7 +24,7 @@ A browser tab opens so you can sign in. Then in Claude Code:
 Prefer to never touch a terminal? Paste this prompt into Claude Code instead:
 
 > Please add PAPI as an MCP server. Run this; it works from any directory:
-> `claude mcp add --transport sse papi https://mcp.getpapi.ai/sse`
+> `claude mcp add --transport http papi https://mcp.getpapi.ai/mcp`
 > Claude Code will open a browser tab so I can sign in. After that, call the
 > `setup` tool to scaffold this project, then run `orient` and tell me which
 > cycle this project is on.
