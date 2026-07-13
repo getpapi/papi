@@ -12,13 +12,21 @@ You connect it once. From then on, your assistant starts every session knowing w
 
 ## Quick start
 
-PAPI connects to your AI tool as an MCP server. The fastest path is Claude Code:
+PAPI connects to your AI tool as an MCP server. **Connecting is two steps — the second one is the one people miss.**
+
+**1. Add the server.** In Claude Code, from your project root:
 
 ```
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
-A browser tab opens, you sign in, and you're connected. Then tell your assistant:
+This registers PAPI. It does **not** sign you in — the server will show `! Needs authentication`. No browser opens on its own.
+
+**2. Authenticate it.** Only you can do this; there's no CLI command for it:
+
+> Run `/mcp`, choose **papi**, and pick **Authenticate**. A browser tab opens — sign in, and you're connected.
+
+Then tell your assistant:
 
 > Run the `setup` tool to scaffold this project, then run `orient` and tell me which cycle this project is on.
 

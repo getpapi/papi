@@ -13,13 +13,27 @@ Pick your tool below. Every path ends the same way: run `setup` once, then
 
 ## Claude Code
 
-Paste this into a terminal (works from any directory):
+Connecting is **two steps**. Step 2 is the one people miss — without it the
+connection is registered but unusable.
+
+**Step 1 — add the server.** Paste this into a terminal (works from any
+directory):
 
 ```
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
-A browser tab opens so you can sign in. Then in Claude Code:
+This registers PAPI. It does **not** sign you in, and **no browser opens**. The
+server will show `! Needs authentication`.
+
+**Step 2 — authenticate.** In Claude Code:
+
+> Run `/mcp`, choose **papi**, and pick **Authenticate**. A browser tab opens —
+> sign in, and you're connected.
+
+There is no CLI command for this. Only you can approve it.
+
+Once connected:
 
 > Run the `setup` tool to scaffold this project. After setup completes, run
 > `orient` and tell me which cycle this project is on.
@@ -28,9 +42,10 @@ Prefer to never touch a terminal? Paste this prompt into Claude Code instead:
 
 > Please add PAPI as an MCP server. Run this; it works from any directory:
 > `claude mcp add --transport http papi https://mcp.getpapi.ai/mcp`
-> Claude Code will open a browser tab so I can sign in. After that, call the
-> `setup` tool to scaffold this project, then run `orient` and tell me which
-> cycle this project is on.
+> That registers it but does not sign me in — so then tell me to run `/mcp`,
+> choose papi, and pick Authenticate (you can't do that step for me). Once I
+> confirm I'm authenticated, call the `setup` tool to scaffold this project,
+> then run `orient` and tell me which cycle this project is on.
 
 ## Cursor
 
@@ -46,7 +61,9 @@ Settings → MCP → Add new server, or create `.cursor/mcp.json`:
 }
 ```
 
-First connection opens a browser tab for sign-in.
+On first connection the server sits unauthenticated until you complete the
+sign-in prompt for `papi` in the MCP settings panel. It will not sign you in on
+its own.
 
 ## VS Code (Copilot MCP)
 
