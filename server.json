@@ -1,0 +1,18 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.getpapi/papi",
+  "title": "PAPI: Persistent Adaptive Project Intelligence",
+  "description": "Adaptive plan/build/review cycles for AI coding assistants, persisted across sessions.",
+  "version": "0.7.50",
+  "websiteUrl": "https://getpapi.ai",
+  "repository": {
+    "url": "https://github.com/getpapi/papi",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.getpapi.ai/mcp"
+    }
+  ]
+}
