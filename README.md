@@ -78,5 +78,6 @@ PAPI exposes these MCP tools to your assistant. The whole loop is a handful of c
 
 - Website and dashboard: [getpapi.ai](https://getpapi.ai)
 - This repo is documentation only. The PAPI engine is closed source; the `@papi-ai/server` package on npm is the supported local runtime.
+- **Licence:** the contents of this repo (docs, guides, config examples, Dockerfile) are MIT. That licence covers this repository only — not the PAPI engine, and not the PAPI name or logo, which are trademarks.
 
 Questions or stuck? Open an issue here.
