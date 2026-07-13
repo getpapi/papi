@@ -3,12 +3,24 @@
   "name": "io.github.getpapi/papi",
   "title": "PAPI: Persistent Adaptive Project Intelligence",
   "description": "Adaptive plan/build/review cycles for AI coding assistants, persisted across sessions.",
-  "version": "0.7.50",
+  "version": "0.7.51",
   "websiteUrl": "https://getpapi.ai",
   "repository": {
     "url": "https://github.com/getpapi/papi",
     "source": "github"
   },
+  "packages": [
+    {
+      "registryType": "npm",
+      "registryBaseUrl": "https://registry.npmjs.org",
+      "identifier": "@papi-ai/server",
+      "version": "0.7.51",
+      "runtimeHint": "npx",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ],
   "remotes": [
     {
       "type": "streamable-http",
