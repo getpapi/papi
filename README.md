@@ -12,27 +12,29 @@ You connect it once. From then on, your assistant starts every session knowing w
 
 ## Quick start
 
-PAPI connects to your AI tool as an MCP server. **Connecting is two steps — the second one is the one people miss.**
+**Let your AI install it.** Paste this to your assistant — Cursor, Claude Code, Windsurf, Codex, VS Code, or any other MCP client:
 
-**1. Add the server.** In Claude Code, from your project root:
+> Install PAPI by following https://github.com/getpapi/papi/blob/main/llms-install.md
+
+That's the whole install. Your assistant reads the instructions for whichever tool it's running in and wires up the connection itself.
+
+**Then authenticate — this part is yours.** PAPI signs in over OAuth, and no AI can click through a browser consent screen for you. Your assistant will tell you exactly where to click; until you do, the server sits at `Needs authentication` and no tool call will work. This is the step people miss.
+
+Once you're connected, tell your assistant:
+
+> Run the `setup` tool to scaffold this project, then run `orient` and tell me which cycle this project is on.
+
+### Prefer to wire it up yourself?
+
+Every tool takes the same streamable-HTTP endpoint, `https://mcp.getpapi.ai/mcp`. In Claude Code that's:
 
 ```
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
-This registers PAPI. It does **not** sign you in — the server will show `! Needs authentication`. No browser opens on its own.
+then `/mcp` → **papi** → **Authenticate**.
 
-**2. Authenticate it.** Only you can do this; there's no CLI command for it:
-
-> Run `/mcp`, choose **papi**, and pick **Authenticate**. A browser tab opens — sign in, and you're connected.
-
-Then tell your assistant:
-
-> Run the `setup` tool to scaffold this project, then run `orient` and tell me which cycle this project is on.
-
-Using Cursor, VS Code, Windsurf, or Codex? See [docs/install.md](docs/install.md).
-
-**Letting your AI do the install?** Point it at [llms-install.md](llms-install.md) and say "install this".
+Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client is in [docs/install.md](docs/install.md).
 
 ## What you get
 

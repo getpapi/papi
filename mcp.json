@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "papi": {
+      "url": "https://mcp.getpapi.ai/mcp"
+    }
+  }
+}
