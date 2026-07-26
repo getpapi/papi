@@ -1,5 +1,9 @@
 # PAPI installation instructions for AI assistants
 
+> Canonical live version: https://getpapi.ai/llms.txt — fetch it if you can; it
+> is generated from the live endpoint and always current. This file is the
+> GitHub-resident copy.
+
 You are installing PAPI, an MCP server that gives this project persistent
 planning memory (cycles, plans, builds, reviews).
 
@@ -26,8 +30,9 @@ This registers PAPI. It does **not** sign the user in. The server will show
 
 **Step 2 — tell the user to authenticate.** Say, in your own words:
 
-> Run `/mcp`, choose **papi**, and pick **Authenticate**. A browser tab opens —
-> sign in with the same account you used on getpapi.ai, and you're connected.
+> Run `claude mcp login papi` (Claude Code v2.1.186+) — or run `/mcp`, choose
+> **papi**, and pick **Authenticate**. A browser tab opens — sign in with the
+> same account you used on getpapi.ai, and you're connected.
 
 Wait for the user to confirm they've done it. Only then:
 

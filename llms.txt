@@ -1,0 +1,52 @@
+# PAPI — agent install runbook
+
+> PAPI (Persistent Adaptive Project Intelligence) is a planning and memory layer for AI-assisted software development. It gives any MCP-capable AI coding tool persistent project memory, structured cycles of plan/build/review, decision tracking, and methodology that compounds across sessions.
+
+**Canonical live version: https://getpapi.ai/llms.txt — fetch that URL if you can.**
+It carries the current per-client config snippets (Claude Code, Cursor, VS Code,
+Windsurf, Codex, generic MCP) and the full docs map, generated from the live
+endpoint so it can never drift. This file is the GitHub-resident copy of the
+facts that don't change.
+
+## The two facts that govern every client
+
+1. PAPI is a single REMOTE MCP server at `https://mcp.getpapi.ai/mcp`. There is
+   no package to install and no local process to run — add the URL as a
+   remote/HTTP MCP server named `papi`.
+2. Auth is BROWSER OAuth. Adding the server does NOT authenticate it — the
+   connection sits at "Needs authentication" until a human signs in in a
+   browser. You CANNOT complete OAuth yourself. Hand that one step back to the
+   user. A user with no PAPI account signs up at https://getpapi.ai first.
+
+## Connect (generic — every client)
+
+Add a remote/HTTP MCP server named `papi` pointing at
+`https://mcp.getpapi.ai/mcp`. Most clients accept the URL alone and open a
+browser for OAuth on first connection. In Claude Code:
+
+```
+claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
+```
+
+then the human runs `claude mcp login papi` (or `/mcp` → papi → Authenticate).
+
+Per-client blocks for Cursor, VS Code, Windsurf, Codex and headless/CI bearer
+setup: fetch https://getpapi.ai/llms.txt or read
+[llms-install.md](llms-install.md) in this repo.
+
+## Prove the connection
+
+Once the user confirms they signed in, call the `orient` tool. If it returns
+cycle details, PAPI is connected. If it fails with an auth error, the browser
+sign-in was not completed — send the user back to it; do not retry.
+
+Then run `setup` (brand-new project) or follow the next action `orient` returns.
+
+## Docs map
+
+- https://getpapi.ai/llms.txt — this runbook, live, with config snippets
+- https://getpapi.ai/docs/guide/quick-start — zero to first cycle in 5 minutes
+- https://getpapi.ai/docs/guide/troubleshooting — fetch FIRST when PAPI seems broken
+- https://getpapi.ai/docs/tools — every PAPI MCP tool, parameters and use cases
+- https://getpapi.ai/docs/install — human-readable per-tool install guide
+- https://github.com/getpapi/papi — this repo: docs and issue tracker

@@ -14,9 +14,9 @@ You connect it once. From then on, your assistant starts every session knowing w
 
 **Let your AI install it.** Paste this to your assistant — Cursor, Claude Code, Windsurf, Codex, VS Code, or any other MCP client:
 
-> Install PAPI by following https://github.com/getpapi/papi/blob/main/llms-install.md
+> Read https://getpapi.ai/llms.txt and set up PAPI
 
-That's the whole install. Your assistant reads the instructions for whichever tool it's running in and wires up the connection itself.
+That's the whole install. Your assistant reads the runbook for whichever tool it's running in and wires up the connection itself. (Same instructions live in this repo as [llms.txt](llms.txt) and [llms-install.md](llms-install.md) if your assistant can't fetch URLs.)
 
 **Then authenticate — this part is yours.** PAPI signs in over OAuth, and no AI can click through a browser consent screen for you. Your assistant will tell you exactly where to click; until you do, the server sits at `Needs authentication` and no tool call will work. This is the step people miss.
 
@@ -44,7 +44,7 @@ Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client
 - **strategy reviews** every few cycles step back and check direction, not just velocity.
 - **A dashboard** at [getpapi.ai](https://getpapi.ai) shows your cycles, board, and decisions, so you can see the state of the project without asking.
 
-The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 320+ cycles.
+The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 339+ cycles.
 
 ## Tools
 
@@ -77,12 +77,27 @@ PAPI exposes these MCP tools to your assistant. The whole loop is a handful of c
 
 ## Documentation
 
+In this repo:
+
 | Doc | What it covers |
 |-----|----------------|
+| [llms.txt](llms.txt) | The agent runbook — point your AI at this (live version: [getpapi.ai/llms.txt](https://getpapi.ai/llms.txt)) |
+| [llms-install.md](llms-install.md) | Per-tool install instructions for AI assistants |
 | [docs/install.md](docs/install.md) | Install paths for every supported tool |
 | [docs/how-it-works.md](docs/how-it-works.md) | Cycles, handoffs, decisions, and how the pieces fit |
 | [docs/troubleshooting.md](docs/troubleshooting.md) | Connection problems, project routing, common fixes |
-| [llms-install.md](llms-install.md) | Machine-readable install instructions for AI assistants |
+
+Full documentation on the website — no account needed:
+
+| Page | What it covers |
+|------|----------------|
+| [Quick Start](https://getpapi.ai/docs/guide/quick-start) | Zero to your first cycle plan in under 5 minutes |
+| [Workflow](https://getpapi.ai/docs/guide/workflow) | The full plan → build → review → release loop |
+| [Concepts](https://getpapi.ai/docs/guide/concepts) | Cycles, handoffs, Active Decisions — the vocabulary |
+| [Cheat Sheet](https://getpapi.ai/docs/guide/cheat-sheet) | Every command on one page |
+| [Tool Reference](https://getpapi.ai/docs/tools) | Every PAPI MCP tool with parameters and use cases |
+| [Troubleshooting](https://getpapi.ai/docs/guide/troubleshooting) | Connection and auth first aid |
+| [Handbook](https://getpapi.ai/docs/handbook) | For teams: reading dashboards, cycle reports, review flow |
 
 ## Links
 
