@@ -30,6 +30,13 @@ claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 
 then the human runs `claude mcp login papi` (or `/mcp` → papi → Authenticate).
 
+**Multi-project? Pin the project first.** The generic connect binds to your
+account's DEFAULT project. If you have (or will create) more than one PAPI
+project, that default can resolve to the WRONG one. Pin the target with an
+`x-papi-project-id: <project-id>` header — open your project at
+https://getpapi.ai, use its Connect panel, and copy the project-scoped config
+(it already carries the header). One PAPI project? The generic connect is fine.
+
 Per-client blocks for Cursor, VS Code, Windsurf, Codex and headless/CI bearer
 setup: fetch https://getpapi.ai/llms.txt or read
 [llms-install.md](llms-install.md) in this repo.
@@ -39,6 +46,11 @@ setup: fetch https://getpapi.ai/llms.txt or read
 Once the user confirms they signed in, call the `orient` tool. If it returns
 cycle details, PAPI is connected. If it fails with an auth error, the browser
 sign-in was not completed — send the user back to it; do not retry.
+
+If `orient` returns the WRONG project (a different board than the repo you are
+in), the config is missing the `x-papi-project-id` header and PAPI fell back to
+your account default — re-copy the project-scoped config from the Connect panel
+at https://getpapi.ai and reconnect.
 
 Then run `setup` (brand-new project) or follow the next action `orient` returns.
 
