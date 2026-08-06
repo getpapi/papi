@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  /* AD-46 v3 dark canon — DESIGN.md §2 ladder. Solid plum, no gradient, no glow. */
+  :root {
+    --bg: #110c1a;          /* content ground   L 0.17 */
+    --chrome: #0b0713;      /* chrome plane     L 0.14 */
+    --card: #181223;        /* card             L 0.20 */
+    --well: #1d1728;        /* surface-1        L 0.22 */
+    --ink: #ece9f3;
+    --ink-dim: #a29ab4;
+    --ink-faint: #6f6880;
+    --border: #302b39;
+    --border-subtle: #24212b;
+    --plum: #a46bf5;
+    --gold: #dcae4a;
+    --green: #4ec98a;
+    --orange: #e08a45;
+    --sky: #6aa8f0;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 640px; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 56px;
+    padding: 0 72px;
+    /* GitHub crops the card's edges in some surfaces; everything that matters
+       sits inside this padding. */
+  }
+
+  .left { width: 520px; flex-shrink: 0; }
+
+  .wordmark {
+    font-size: 34px; font-weight: 800; letter-spacing: 0.14em;
+    color: var(--ink);
+  }
+  .rule { width: 96px; height: 3px; background: var(--gold); border-radius: 2px; margin-top: 10px; }
+
+  h1 {
+    margin-top: 34px;
+    font-size: 43px; line-height: 1.1; font-weight: 800; letter-spacing: -0.028em;
+  }
+  h1 .said { color: var(--plum); }
+
+  .lead {
+    margin-top: 22px;
+    font-size: 21px; line-height: 1.45; color: var(--ink-dim); max-width: 470px;
+  }
+
+  .foot {
+    margin-top: 40px; display: flex; align-items: center; gap: 14px;
+    font-size: 19px; font-weight: 700; color: var(--plum);
+  }
+  .foot .sep { width: 4px; height: 4px; border-radius: 50%; background: var(--ink-faint); }
+  .foot .quiet { color: var(--ink-faint); font-weight: 600; }
+
+  /* ── the artifact: a reduced cycle board ─────────────────────────────── */
+  .board {
+    flex: 1;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55);
+    overflow: hidden;
+  }
+  .board-head {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 20px;
+    background: var(--chrome);
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .proj { display: flex; align-items: center; gap: 11px; font-size: 17px; font-weight: 700; }
+  .diamond { width: 9px; height: 9px; background: var(--plum); transform: rotate(45deg); }
+  .cyclechip {
+    font-size: 12px; font-weight: 700; color: var(--ink-dim);
+    border: 1px solid var(--border); border-radius: 999px; padding: 3px 10px;
+  }
+  .live { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; color: var(--green); }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+
+  .spine { display: flex; gap: 5px; padding: 18px 20px 9px; }
+  .seg { flex: 1; height: 7px; border-radius: 999px; background: #2a2337; }
+  .seg.done { background: var(--plum); }
+  .seg.now { background: var(--orange); }
+  .ticks { display: flex; padding: 0 20px 16px; font-size: 11px; letter-spacing: 0.07em; text-transform: uppercase; font-weight: 700; }
+  .ticks span { flex: 1; color: var(--ink-faint); }
+  .ticks span.on { color: var(--orange); }
+  .ticks span.was { color: var(--plum); }
+
+  .lanes { padding: 0 20px 4px; }
+  .lane {
+    display: flex; align-items: center; gap: 13px;
+    padding: 11px 13px; margin-bottom: 8px;
+    border-left: 3px solid var(--border);
+    border-radius: 8px;
+  }
+  .lane.now { background: var(--well); border-left-color: var(--orange); }
+  .lane .stage { width: 62px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-faint); }
+  .lane.now .stage { color: var(--orange); }
+  .lane .id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--ink-faint); }
+  .lane .task { font-size: 15px; color: var(--ink-dim); }
+  .lane.now .task { color: var(--ink); font-weight: 650; }
+  .lane .right { margin-left: auto; display: flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; }
+  .verdict { color: var(--sky); }
+  .shipped { color: var(--green); }
+
+  .board-foot {
+    display: flex; align-items: center; gap: 9px;
+    padding: 13px 20px; border-top: 1px solid var(--border-subtle);
+    font-size: 13px; color: var(--ink-faint);
+  }
+  .board-foot b { color: var(--gold); font-weight: 800; }
+  .board-foot .kept { color: var(--ink-dim); font-weight: 700; }
+</style>
+</head>
+<body>
+  <div class="left">
+    <div class="wordmark">PAPI</div>
+    <div class="rule"></div>
+
+    <h1>Your AI starts every session from zero.<br>
+      <span class="said">Your project stays on course.</span></h1>
+
+    <p class="lead">
+      Plan, build and review cycles your AI assistant runs with you. The plan,
+      and the reasons behind it, survive every new session.
+    </p>
+
+    <div class="foot">
+      <span>getpapi.ai</span>
+      <span class="sep"></span>
+      <span class="quiet">MCP · free to start</span>
+    </div>
+  </div>
+
+  <div class="board">
+    <div class="board-head">
+      <div class="proj">
+        <span class="diamond"></span>
+        <span>LedgerLite</span>
+        <span class="cyclechip">Cycle 3</span>
+      </div>
+      <div class="live"><span class="dot"></span>building</div>
+    </div>
+
+    <div class="spine">
+      <div class="seg done"></div>
+      <div class="seg now"></div>
+      <div class="seg"></div>
+      <div class="seg"></div>
+    </div>
+    <div class="ticks">
+      <span class="was">Plan</span>
+      <span class="on">Build</span>
+      <span>Review</span>
+      <span>Released</span>
+    </div>
+
+    <div class="lanes">
+      <div class="lane now">
+        <span class="stage">Build</span>
+        <span class="id">task-8</span>
+        <span class="task">Stripe checkout links</span>
+        <span class="right"><span class="dot"></span></span>
+      </div>
+      <div class="lane">
+        <span class="stage">Review</span>
+        <span class="id">task-6</span>
+        <span class="task">Revenue dashboard</span>
+        <span class="right verdict">your verdict</span>
+      </div>
+      <div class="lane">
+        <span class="stage">Released</span>
+        <span class="id">task-4</span>
+        <span class="task">Invoice PDF export</span>
+        <span class="right shipped">shipped</span>
+      </div>
+    </div>
+
+    <div class="board-foot">
+      <span>PAPI caught</span><b>2</b><span>before they shipped</span>
+      <span class="sep" style="width:4px;height:4px;border-radius:50%;background:var(--ink-faint);margin:0 4px"></span>
+      <span class="kept">4 decisions</span><span>kept</span>
+    </div>
+  </div>
+</body>
+</html>

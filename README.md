@@ -5,11 +5,13 @@
 [![npm @papi-ai/server](https://img.shields.io/npm/v/%40papi-ai%2Fserver?label=%40papi-ai%2Fserver&color=5a4b8a)](https://www.npmjs.com/package/@papi-ai/server)
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.getpapi%2Fpapi-5a4b8a)](https://registry.modelcontextprotocol.io/?search=io.github.getpapi%2Fpapi)
 [![Smithery](https://img.shields.io/badge/Smithery-listed-5a4b8a)](https://smithery.ai/servers/cathal/getpapi)
-[![Cycles shipped](https://img.shields.io/badge/cycles_shipped-351-5a4b8a)](https://getpapi.ai/changelog)
+[![Cycles shipped](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgetpapi.ai%2Fapi%2Fstats&query=%24.totalCycles&label=cycles%20shipped&color=5a4b8a&cacheSeconds=3600)](https://getpapi.ai/changelog)
 [![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
 [![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
 
-**PAPI keeps you in control of what you're building, across every AI tool you and your team use.**
+**Your AI starts every session from zero. Your project stays on course.**
+
+![A cycle running in PAPI: the hub, the board, the decision log, and the project's history](assets/tour.gif)
 
 AI coding tools are great at writing code and terrible at remembering why. Every new session starts from zero: you re-explain the project, the decisions, the plan. PAPI is the layer that fixes that. It gives your AI assistant structured project memory (plans, builds, reviews, decisions) that persists across sessions, tools, and teammates.
 
@@ -53,15 +55,31 @@ Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client
 - **strategy reviews** every few cycles step back and check direction, not just velocity.
 - **A dashboard** at [getpapi.ai](https://getpapi.ai) shows your cycles, board, and decisions, so you can see the state of the project without asking.
 
-The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 351+ cycles.
+The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for every cycle in the badge above.
+
+![The PAPI hub: what needs your attention, where the current cycle stands, and the next move](assets/hub.png)
+
+*The hub opens on one question — what happens next. The cycle's progress through plan, build, review and release sits under it.*
+
+![The PAPI board: tasks grouped by status with priority, size, type and module](assets/board.png)
+
+*The board is the full picture. Your assistant writes to it as a side effect of working, so it is current without anyone maintaining it.*
 
 ## How this differs from a tracker
 
-**Unlike Linear or Jira,** nothing here is maintained by hand. Those boards assume a human writes the ticket and a human reads it. PAPI's board is written and read by your assistant as a side effect of working: starting a build opens the task, finishing it files the report, releasing closes the cycle. You approve the plan and you sign off the review. The ticket admin in between is the part that disappears.
+**Unlike Linear, Jira, Asana or Notion,** this was not built for humans and then opened to agents. Those boards assume a human writes the ticket and a human reads it, in a tab your AI can't see. PAPI's board is written and read by your assistant as a side effect of working: starting a build opens the task, finishing it files the report, releasing closes the cycle. You approve the plan and you sign off the review. The ticket admin in between is the part that disappears. You manage the outcome, not the keystrokes.
 
 **Unlike Taskmaster** and other in-repo task files, PAPI's state isn't a file one tool generates once and then drifts from. It's hosted and structured — cycles, build reports, review verdicts, and Active Decisions carrying confidence levels that change as evidence arrives. The same project memory is there from Claude Code, Cursor, VS Code, or Codex, so switching tools doesn't reset your context, and last cycle's learnings are an input to the next plan rather than something you have to remember to mention.
 
 Neither of those is a knock on the tools. They're solving a different problem to the one that breaks every time your assistant opens a fresh window.
+
+![Active Decisions in PAPI: each decision with its confidence level and the cycles it has survived](assets/decisions.png)
+
+*Active Decisions are the part a task tracker has no field for: what was decided, why, what was rejected, and when to revisit it. Confidence moves as evidence arrives.*
+
+![The project's history in PAPI: cycles, tasks shipped, decision events and strategy reviews on one timeline](assets/time-machine.png)
+
+*Every cycle leaves a trail, so the reasoning behind the project is still there months later — including for the assistant reading it back.*
 
 ## Tools
 
