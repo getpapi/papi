@@ -1,0 +1,88 @@
+name: Bug report
+description: A PAPI tool, the dashboard, or something in these docs behaves incorrectly.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For anything to do with connecting or authenticating, use the
+        **Connection problem** template instead — it asks the right questions.
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where did this happen?
+      options:
+        - An MCP tool (plan, build_execute, orient, etc)
+        - The dashboard at getpapi.ai
+        - The docs in this repo
+        - Somewhere else
+    validations:
+      required: true
+
+  - type: input
+    id: tool
+    attributes:
+      label: Which tool or page?
+      placeholder: "plan / build_execute / the board view / docs/install.md"
+    validations:
+      required: false
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: Include the exact error text if there was one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: >-
+        What you asked your assistant to do, in order. If it's reliably
+        reproducible, say so — that changes how fast this gets fixed.
+      placeholder: |
+        1. Ran `orient`
+        2. Asked the assistant to run `plan` for the next cycle
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: client
+    attributes:
+      label: AI tool and version
+      placeholder: "Cursor 1.8 / Claude Code 2.1.190"
+    validations:
+      required: false
+
+  - type: input
+    id: when
+    attributes:
+      label: Roughly when did this happen?
+      description: >-
+        A date and rough time (with your timezone) lets us line the report up
+        against server logs.
+      placeholder: "2026-08-05, around 14:30 CEST"
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: redaction
+    attributes:
+      label: Before you submit
+      options:
+        - label: >-
+            I've removed every API key, bearer token, and anything from my
+            project I don't want public.
+          required: true

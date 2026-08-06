@@ -1,0 +1,64 @@
+name: Feature request
+description: Something PAPI should do that it doesn't do today.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        PAPI's engine is closed source, so this repo is where a request gets
+        *filed*, not where it gets built. Requests land on the real board and
+        get planned into a cycle like anything else. You'll get a reply either
+        way, including when the answer is no.
+
+        The requests that get built are the ones that describe a problem
+        clearly. A described problem survives; a described solution usually
+        gets rebuilt on the way in.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What's the problem?
+      description: >-
+        What are you trying to do, and where does PAPI get in the way today?
+        Concrete beats abstract — a real moment from a real session is worth
+        more than a general principle.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like PAPI to do?
+      description: >-
+        A rough shape is fine. If you have a view on which tool this belongs
+        to, say so.
+    validations:
+      required: true
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: How are you working around it now?
+      description: >-
+        A workaround tells us how much this actually hurts, and sometimes it
+        turns out PAPI already supports it in a way that isn't discoverable —
+        which is its own bug.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of PAPI?
+      options:
+        - Planning (plan, backlog, ideas)
+        - Building (build_execute, handoffs, branches)
+        - Review and release
+        - Strategy, decisions, and learnings
+        - The dashboard
+        - Install, connection, and client support
+        - Docs
+        - Something else / not sure
+    validations:
+      required: false

@@ -1,0 +1,143 @@
+name: Connection problem
+description: PAPI won't connect, won't authenticate, or connects to the wrong project.
+title: "[connect] "
+labels: ["connection"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Connecting is the step people get stuck on most, so this form asks for
+        the handful of details that usually identify the cause in one pass.
+
+        **Two quick checks first — they solve most reports:**
+
+        1. Adding the server does **not** sign you in. If your client shows
+           `Needs authentication`, complete the browser sign-in. No tool call
+           works until you do.
+        2. If `orient` returns someone else's board, your config is missing the
+           `x-papi-project-id` header and PAPI fell back to your account
+           default. Re-copy the project-scoped config from the Connect panel at
+           https://getpapi.ai.
+
+        Both are covered in more depth in
+        [docs/troubleshooting.md](https://github.com/getpapi/papi/blob/main/docs/troubleshooting.md).
+
+  - type: dropdown
+    id: client
+    attributes:
+      label: Which AI tool are you connecting from?
+      options:
+        - Claude Code
+        - Cursor
+        - VS Code (GitHub Copilot)
+        - Windsurf
+        - Codex
+        - OpenCode
+        - Other (say which below)
+    validations:
+      required: true
+
+  - type: input
+    id: client-version
+    attributes:
+      label: Client name and version
+      description: >-
+        If you picked "Other" above, name it here. A version helps either way
+        (`claude --version`, Cursor's About panel, etc).
+      placeholder: "Claude Code 2.1.190"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: install-method
+    attributes:
+      label: How did you install PAPI?
+      options:
+        - Remote server + browser OAuth (the default)
+        - Remote server + bearer token (headless / CI)
+        - Local stdio runtime via npx @papi-ai/server
+        - Not sure
+    validations:
+      required: true
+
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: What actually happens?
+      options:
+        - The server never appears in my tool at all
+        - It appears but stays at "Needs authentication"
+        - The browser sign-in never opens
+        - Sign-in completes but every call returns 401 / unauthorized
+        - Calls hang or time out
+        - It connects, but `orient` returns the wrong project
+        - Something else (describe below)
+    validations:
+      required: true
+
+  - type: textarea
+    id: detail
+    attributes:
+      label: What you did and what you saw
+      description: >-
+        The commands you ran, the exact error text, and what you expected
+        instead. Paste error output verbatim rather than summarising it.
+    validations:
+      required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: Your MCP config, with secrets redacted
+      description: >-
+        The `papi` entry from your MCP config file. **Replace any bearer token
+        or API key with `REDACTED` before pasting.** The URL, the header
+        *names*, and the project id are all useful; the token value never is.
+      render: json
+      placeholder: |
+        {
+          "mcpServers": {
+            "papi": {
+              "url": "https://mcp.getpapi.ai/mcp",
+              "headers": {
+                "Authorization": "Bearer REDACTED",
+                "x-papi-project-id": "REDACTED"
+              }
+            }
+          }
+        }
+    validations:
+      required: false
+
+  - type: textarea
+    id: orient
+    attributes:
+      label: What did `orient` return?
+      description: >-
+        Ask your assistant to call the `orient` tool and paste the result — the
+        error if it failed, or the project name and cycle if it succeeded but
+        pointed somewhere unexpected. This is the single most useful field on
+        the form.
+      render: text
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: tried
+    attributes:
+      label: Already tried
+      options:
+        - label: Restarted the client after editing the MCP config
+        - label: Completed the browser sign-in and saw a success screen
+        - label: Checked https://mcp.getpapi.ai/healthz returns 200
+        - label: Read [docs/troubleshooting.md](https://github.com/getpapi/papi/blob/main/docs/troubleshooting.md)
+
+  - type: checkboxes
+    id: redaction
+    attributes:
+      label: Before you submit
+      options:
+        - label: >-
+            I've removed every API key, bearer token, and `papi_` value from
+            everything I pasted above.
+          required: true

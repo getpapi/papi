@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Discord community
+    url: https://discord.gg/PbacBJ9fNw
+    about: Fastest place to get unstuck, and where release notes land first.
+  - name: Documentation
+    url: https://getpapi.ai/docs/guide/quick-start
+    about: Quick start, workflow, concepts, and the full tool reference. No account needed.
+  - name: Troubleshooting
+    url: https://getpapi.ai/docs/guide/troubleshooting
+    about: Connection and auth first aid. Worth a look before filing a connection problem.
+  - name: Report a security issue
+    url: https://github.com/getpapi/papi/blob/main/SECURITY.md
+    about: Please don't file security issues as public issues. SECURITY.md has the private channel.

@@ -1,0 +1,45 @@
+name: Question
+description: How does PAPI handle X? Ask here, or ask faster in Discord.
+title: "[question] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Happy to answer questions here. If you want an answer sooner, the
+        [Discord](https://discord.gg/PbacBJ9fNw) is faster and other people
+        benefit from the thread.
+
+        Worth a look first, since they cover most of what gets asked:
+        [Concepts](https://getpapi.ai/docs/guide/concepts) ·
+        [Workflow](https://getpapi.ai/docs/guide/workflow) ·
+        [Tool reference](https://getpapi.ai/docs/tools) ·
+        [Troubleshooting](https://getpapi.ai/docs/guide/troubleshooting)
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Your question
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: What you're trying to do
+      description: >-
+        The underlying goal, not just the immediate blocker. Answers are much
+        better when we can see what you're actually building toward.
+    validations:
+      required: false
+
+  - type: input
+    id: docs-checked
+    attributes:
+      label: Which docs did you already read?
+      description: >-
+        Not a gate — it just tells us where the docs failed you, which is
+        useful on its own.
+      placeholder: "docs/install.md, the Quick Start"
+    validations:
+      required: false
