@@ -1,6 +1,6 @@
 # PAPI — agent install runbook
 
-> PAPI (Persistent Adaptive Project Intelligence) is a planning and memory layer for AI-assisted software development. It gives any MCP-capable AI coding tool persistent project memory, structured cycles of plan/build/review, decision tracking, and methodology that compounds across sessions.
+> PAPI (Persistent Adaptive Project Intelligence) keeps a software project on course while an AI assistant builds it. Every new session starts from zero; PAPI holds the plan, the decisions and the direction across all of them, and gives any MCP-capable AI coding tool structured plan/build/review cycles, decision tracking, and a methodology that compounds cycle over cycle.
 
 **Canonical live version: https://getpapi.ai/llms.txt — fetch that URL if you can.**
 It carries the current per-client config snippets (Claude Code, Cursor, VS Code,
