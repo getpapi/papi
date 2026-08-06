@@ -9,7 +9,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
 [![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
 
-**PAPI keeps you in control of what you're building, across every AI tool you and your team use.**
+**Your AI starts every session from zero. Your project stays on course.**
 
 ![A cycle running in PAPI: the hub, the board, the decision log, and the project's history](assets/tour.gif)
 
@@ -55,7 +55,7 @@ Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client
 - **strategy reviews** every few cycles step back and check direction, not just velocity.
 - **A dashboard** at [getpapi.ai](https://getpapi.ai) shows your cycles, board, and decisions, so you can see the state of the project without asking.
 
-The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 351+ cycles.
+The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for every cycle in the badge above.
 
 ![The PAPI hub: what needs your attention, where the current cycle stands, and the next move](assets/hub.png)
 
@@ -67,7 +67,7 @@ The methodology is the product: a plan, build, review, release loop your assista
 
 ## How this differs from a tracker
 
-**Unlike Linear or Jira,** nothing here is maintained by hand. Those boards assume a human writes the ticket and a human reads it. PAPI's board is written and read by your assistant as a side effect of working: starting a build opens the task, finishing it files the report, releasing closes the cycle. You approve the plan and you sign off the review. The ticket admin in between is the part that disappears.
+**Unlike Linear, Jira, Asana or Notion,** this was not built for humans and then opened to agents. Those boards assume a human writes the ticket and a human reads it, in a tab your AI can't see. PAPI's board is written and read by your assistant as a side effect of working: starting a build opens the task, finishing it files the report, releasing closes the cycle. You approve the plan and you sign off the review. The ticket admin in between is the part that disappears. You manage the outcome, not the keystrokes.
 
 **Unlike Taskmaster** and other in-repo task files, PAPI's state isn't a file one tool generates once and then drifts from. It's hosted and structured — cycles, build reports, review verdicts, and Active Decisions carrying confidence levels that change as evidence arrives. The same project memory is there from Claude Code, Cursor, VS Code, or Codex, so switching tools doesn't reset your context, and last cycle's learnings are an input to the next plan rather than something you have to remember to mention.
 
