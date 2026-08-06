@@ -10,13 +10,18 @@ facts that don't change.
 
 ## The two facts that govern every client
 
-1. PAPI is a single REMOTE MCP server at `https://mcp.getpapi.ai/mcp`. There is
-   no package to install and no local process to run — add the URL as a
-   remote/HTTP MCP server named `papi`.
+1. PAPI is a single REMOTE MCP server at `https://mcp.getpapi.ai/mcp`. On the
+   default path there is no package to install and no local process to run —
+   add the URL as a remote/HTTP MCP server named `papi`.
 2. Auth is BROWSER OAuth. Adding the server does NOT authenticate it — the
    connection sits at "Needs authentication" until a human signs in in a
    browser. You CANNOT complete OAuth yourself. Hand that one step back to the
    user. A user with no PAPI account signs up at https://getpapi.ai first.
+
+The hosted endpoint above is the default and recommended path. A local stdio
+runtime is also supported for advanced setups: `npx @papi-ai/server`,
+authenticated with an API key instead of a browser sign-in. See "Local runtime
+(advanced)" in [llms-install.md](llms-install.md).
 
 ## Connect (generic — every client)
 
@@ -37,8 +42,8 @@ project, that default can resolve to the WRONG one. Pin the target with an
 https://getpapi.ai, use its Connect panel, and copy the project-scoped config
 (it already carries the header). One PAPI project? The generic connect is fine.
 
-Per-client blocks for Cursor, VS Code, Windsurf, Codex and headless/CI bearer
-setup: fetch https://getpapi.ai/llms.txt or read
+Per-client blocks for Cursor, VS Code, Windsurf, Codex, headless/CI bearer
+setup and the local stdio runtime: fetch https://getpapi.ai/llms.txt or read
 [llms-install.md](llms-install.md) in this repo.
 
 ## Prove the connection
@@ -61,4 +66,6 @@ Then run `setup` (brand-new project) or follow the next action `orient` returns.
 - https://getpapi.ai/docs/guide/troubleshooting — fetch FIRST when PAPI seems broken
 - https://getpapi.ai/docs/tools — every PAPI MCP tool, parameters and use cases
 - https://getpapi.ai/docs/install — human-readable per-tool install guide
+- https://www.npmjs.com/package/@papi-ai/server — the MCP server package, for
+  stdio / advanced local installs
 - https://github.com/getpapi/papi — this repo: docs and issue tracker

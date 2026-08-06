@@ -2,13 +2,22 @@
 
 <!-- mcp-name: io.github.getpapi/papi -->
 
-[![smithery badge](https://smithery.ai/badge/cathal/getpapi)](https://smithery.ai/servers/cathal/getpapi)
+[![npm @papi-ai/server](https://img.shields.io/npm/v/%40papi-ai%2Fserver?label=%40papi-ai%2Fserver&color=5a4b8a)](https://www.npmjs.com/package/@papi-ai/server)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.getpapi%2Fpapi-5a4b8a)](https://registry.modelcontextprotocol.io/?search=io.github.getpapi%2Fpapi)
+[![Smithery](https://img.shields.io/badge/Smithery-listed-5a4b8a)](https://smithery.ai/servers/cathal/getpapi)
+[![Cycles shipped](https://img.shields.io/badge/cycles_shipped-351-5a4b8a)](https://getpapi.ai/changelog)
+[![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
+[![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
 
 **PAPI keeps you in control of what you're building, across every AI tool you and your team use.**
 
 AI coding tools are great at writing code and terrible at remembering why. Every new session starts from zero: you re-explain the project, the decisions, the plan. PAPI is the layer that fixes that. It gives your AI assistant structured project memory (plans, builds, reviews, decisions) that persists across sessions, tools, and teammates.
 
 You connect it once. From then on, your assistant starts every session knowing which cycle you're on, what's in flight, and what to do next.
+
+**Free to start.** The whole plan → build → review → release loop, on up to three projects, no card. Free runs a real project start to finish; it isn't a trial. [Pricing](https://getpapi.ai/pricing).
+
+> **What this repo is.** Documentation, install guides, and the issue tracker. PAPI's engine is closed source and hosted — you connect to it, you don't build it from here. The [`@papi-ai/server`](https://www.npmjs.com/package/@papi-ai/server) package on npm is the supported local runtime. The contents of this repo are MIT.
 
 ## Quick start
 
@@ -44,7 +53,15 @@ Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client
 - **strategy reviews** every few cycles step back and check direction, not just velocity.
 - **A dashboard** at [getpapi.ai](https://getpapi.ai) shows your cycles, board, and decisions, so you can see the state of the project without asking.
 
-The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 339+ cycles.
+The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for 351+ cycles.
+
+## How this differs from a tracker
+
+**Unlike Linear or Jira,** nothing here is maintained by hand. Those boards assume a human writes the ticket and a human reads it. PAPI's board is written and read by your assistant as a side effect of working: starting a build opens the task, finishing it files the report, releasing closes the cycle. You approve the plan and you sign off the review. The ticket admin in between is the part that disappears.
+
+**Unlike Taskmaster** and other in-repo task files, PAPI's state isn't a file one tool generates once and then drifts from. It's hosted and structured — cycles, build reports, review verdicts, and Active Decisions carrying confidence levels that change as evidence arrives. The same project memory is there from Claude Code, Cursor, VS Code, or Codex, so switching tools doesn't reset your context, and last cycle's learnings are an input to the next plan rather than something you have to remember to mention.
+
+Neither of those is a knock on the tools. They're solving a different problem to the one that breaks every time your assistant opens a fresh window.
 
 ## Tools
 
@@ -99,10 +116,23 @@ Full documentation on the website — no account needed:
 | [Troubleshooting](https://getpapi.ai/docs/guide/troubleshooting) | Connection and auth first aid |
 | [Handbook](https://getpapi.ai/docs/handbook) | For teams: reading dashboards, cycle reports, review flow |
 
+## Community and support
+
+Stuck, or something's broken? Open an issue — there are templates for each case, and the **connection problem** one is the one to reach for if PAPI won't connect or won't authenticate, which is where people get stuck most:
+
+- [Connection problem](https://github.com/getpapi/papi/issues/new?template=1-connection-problem.yml) · [Bug report](https://github.com/getpapi/papi/issues/new?template=2-bug-report.yml) · [Question](https://github.com/getpapi/papi/issues/new?template=3-question.yml) · [Feature request](https://github.com/getpapi/papi/issues/new?template=4-feature-request.yml)
+- [Discord](https://discord.gg/PbacBJ9fNw) is faster for questions, and release notes land there first.
+- [CONTRIBUTING.md](CONTRIBUTING.md) covers what a useful report looks like and what a docs PR can change.
+- Found a vulnerability? Don't open an issue — [SECURITY.md](SECURITY.md) has the private channel.
+
+### Star the repo
+
+If PAPI is useful to you, [star it](https://github.com/getpapi/papi). That's the whole ask, and it's how other people building with AI assistants find it.
+
 ## Links
 
 - Website and dashboard: [getpapi.ai](https://getpapi.ai)
-- This repo is documentation only. The PAPI engine is closed source; the `@papi-ai/server` package on npm is the supported local runtime.
+- Pricing: [getpapi.ai/pricing](https://getpapi.ai/pricing) — free tier, no card
+- What shipped in each cycle: [getpapi.ai/changelog](https://getpapi.ai/changelog)
+- Data, access, and what PAPI doesn't have yet: [getpapi.ai/trust](https://getpapi.ai/trust)
 - **Licence:** the contents of this repo (docs, guides, config examples, Dockerfile) are MIT. That licence covers this repository only — not the PAPI engine, and not the PAPI name or logo, which are trademarks.
-
-Questions or stuck? Open an issue here.
