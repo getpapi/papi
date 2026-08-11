@@ -1,0 +1,31 @@
+{
+  "name": "papi",
+  "owner": {
+    "name": "PAPI",
+    "email": "cathal@papi.ai",
+    "url": "https://getpapi.ai"
+  },
+  "metadata": {
+    "description": "PAPI — persistent project management for AI coding agents.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "papi",
+      "source": "./",
+      "description": "Plans what to build next, tracks every decision, and keeps your project coherent across sessions and across tools. Connects to the hosted PAPI server over OAuth — nothing runs locally.",
+      "version": "1.0.0",
+      "author": { "name": "PAPI", "url": "https://getpapi.ai" },
+      "homepage": "https://getpapi.ai",
+      "repository": "https://github.com/getpapi/papi",
+      "license": "MIT",
+      "keywords": [
+        "project-management",
+        "planning",
+        "mcp",
+        "productivity",
+        "developer-tools"
+      ]
+    }
+  ]
+}
