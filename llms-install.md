@@ -62,7 +62,27 @@ Bearer (recommended) — see the one-liner above. OAuth alternative:
 ```bash
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
-Then tell the user: **run `/mcp`, choose `papi`, select Authenticate, complete the browser sign-in, and come back.** Adding the server does NOT authenticate it and does NOT open a browser on its own.
+Adding the server does NOT authenticate it and does NOT open a browser on its own. The sign-in that follows is not yours to run:
+
+```
++-- HUMAN STEP — do not run this yourself ----------------------------
+| Hand this step to the user. Only a person can complete a browser OAuth.
+|
+| Tell them, in their own Claude Code session, either:
+|   - open the  /mcp  panel, choose papi, and pick Authenticate.
+|     Works on every version, so lead with this one; or
+|   - on Claude Code v2.1.186+, the mcp-login subcommand against the papi
+|     server — the four words are:  claude / mcp / login / papi  — which
+|     opens the browser directly.
+|
+| Do NOT run either yourself, and do not retry in a background shell, a
+| subshell, or a new terminal process. An agent shell is not a TTY, so the
+| OAuth prompt fails with "stdin isn't a terminal, so authentication can't be
+| completed here". Retrying escalates the failure, it does not fix it.
+|
+| They must sign in with the same account they used on getpapi.ai.
++-- ── end human step ── ---------------------------------------------
+```
 
 > If the user is running Claude Code **inside** VS Code (CLI or the Claude Code extension), use THIS section — not the "VS Code (native Copilot MCP)" section below. The tell is `/mcp`: Claude Code has it, native VS Code MCP does not.
 
@@ -77,7 +97,20 @@ url = "https://mcp.getpapi.ai/mcp"
 Authorization = "Bearer ${PAPI_CONNECTION_TOKEN}"
 x-papi-project-id = "${PAPI_PROJECT_ID}"
 ```
-Validate `codex mcp list`. For OAuth instead: omit the headers block and run `codex mcp login papi`.
+Validate `codex mcp list`. For OAuth instead, omit the headers block — then the sign-in is the user's:
+
+```
++-- HUMAN STEP — do not run this yourself ----------------------------
+| Hand this step to the user. Only a person can complete a browser OAuth.
+|
+| Codex prompts to authorise in the browser on first connection. Codex also
+| has an mcp-login subcommand against the papi server — the four words are:
+| codex / mcp / login / papi — and that is theirs to run, not yours.
+|
+| You cannot complete it for them, and there is no agent-side retry that
+| will. Wait for them to confirm, then verify with the orient tool.
++-- ── end human step ── ---------------------------------------------
+```
 
 ### Cursor
 Merge into `.cursor/mcp.json`:
@@ -208,8 +241,8 @@ Add the config file (e.g. `.mcp.json`) to `.gitignore` — it references credent
 
 | Symptom | Cause | Fix |
 |---------|-------|-----|
-| Tool says "connected" but PAPI tools are missing | Server added but not authenticated (OAuth path) | Run the client's authenticate step (Claude Code: `/mcp` → papi → Authenticate). Or switch to the bearer one-liner, which needs no authenticate step. |
-| Authentication error on a tool call | OAuth incomplete or expired | Re-authenticate. Do NOT reinstall, do NOT retry in a loop. |
+| Tool says "connected" but PAPI tools are missing | Server added but not authenticated (OAuth path) | **HUMAN STEP** — ask the user to run their client's authenticate action (in Claude Code, the /mcp panel → papi → Authenticate). Do not run it yourself. Or switch to the bearer one-liner, which needs no authenticate step. |
+| Authentication error on a tool call | OAuth incomplete or expired | **HUMAN STEP** — ask the user to re-authenticate. Do NOT reinstall, and do NOT retry in a loop; an agent shell cannot complete OAuth. |
 | `papi` server missing after restart | Config not loaded / wrong path | Confirm the config path for your client and that the endpoint ends in `/mcp`; restart the client. |
 | Config was overwritten | Merge clobbered the file | Restore the backup and merge only the `papi` entry. |
 | Wrong PAPI project | Wrong `x-papi-project-id` | Check the ID against the Connect panel at https://getpapi.ai. |
