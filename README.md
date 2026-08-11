@@ -37,13 +37,20 @@ Once you're connected, tell your assistant:
 
 ### Prefer to wire it up yourself?
 
-Every tool takes the same streamable-HTTP endpoint, `https://mcp.getpapi.ai/mcp`. In Claude Code that's:
+In Claude Code, the shortest path is the plugin — two lines, nothing to copy or edit:
+
+```
+/plugin marketplace add getpapi/papi
+/plugin install papi@papi
+```
+
+Every tool also takes the same streamable-HTTP endpoint directly, `https://mcp.getpapi.ai/mcp`. In Claude Code that's:
 
 ```
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
-then `/mcp` → **papi** → **Authenticate**.
+Either way, finish with `/mcp` → **papi** → **Authenticate**.
 
 Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client is in [docs/install.md](docs/install.md).
 

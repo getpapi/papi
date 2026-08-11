@@ -23,11 +23,27 @@ runtime is also supported for advanced setups: `npx @papi-ai/server`,
 authenticated with an API key instead of a browser sign-in. See "Local runtime
 (advanced)" in [llms-install.md](llms-install.md).
 
+## Connect — Claude Code (shortest path: the plugin)
+
+Two lines, inside Claude Code:
+
+```
+/plugin marketplace add getpapi/papi
+/plugin install papi@papi
+```
+
+The plugin bundles the remote server config, so there is nothing to copy and
+nothing to edit. The human still completes the browser sign-in.
+
+Note for agents: plugin-bundled tools are namespaced `mcp__plugin_papi_papi__*`
+rather than `mcp__papi__*`. If a hook matcher, permission rule or allowed-tools
+list is written against the bare name, it will not fire for a plugin install.
+
 ## Connect (generic — every client)
 
 Add a remote/HTTP MCP server named `papi` pointing at
 `https://mcp.getpapi.ai/mcp`. Most clients accept the URL alone and open a
-browser for OAuth on first connection. In Claude Code:
+browser for OAuth on first connection. In Claude Code, without the plugin:
 
 ```
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
