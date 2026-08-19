@@ -6,22 +6,32 @@
     "url": "https://getpapi.ai"
   },
   "metadata": {
-    "description": "PAPI — persistent project management for AI coding agents.",
-    "version": "1.0.0"
+    "description": "PAPI — persistent project management for AI coding agents."
   },
   "plugins": [
     {
       "name": "papi",
       "source": "./",
-      "description": "Plans what to build next, tracks every decision, and keeps your project coherent across sessions and across tools. Connects to the hosted PAPI server over OAuth — nothing runs locally.",
-      "version": "1.0.0",
+      "description": "Persistent project management inside your AI coding tool. PAPI plans what to build next, tracks every decision, and keeps projects coherent across sessions — so a new session starts where the last one left off instead of from nothing. Connects to the hosted PAPI server over OAuth; nothing runs locally.",
       "author": { "name": "PAPI", "url": "https://getpapi.ai" },
       "homepage": "https://getpapi.ai",
       "repository": "https://github.com/getpapi/papi",
       "license": "MIT",
-      "keywords": [
+      "category": "productivity",
+      "tags": [
+        "papi",
         "project-management",
         "planning",
+        "task-management",
+        "context",
+        "mcp"
+      ],
+      "keywords": [
+        "papi",
+        "project-management",
+        "planning",
+        "task-management",
+        "context",
         "mcp",
         "productivity",
         "developer-tools"
