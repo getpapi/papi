@@ -16,8 +16,20 @@ Pick your tool below. Every path ends the same way: run `setup` once, then
 Connecting is **two steps**. Step 2 is the one people miss — without it the
 connection is registered but unusable.
 
-**Step 1 — add the server.** Paste this into a terminal (works from any
-directory):
+**Step 1 — add the server.** The shortest path is the plugin. Run these inside
+Claude Code; there is nothing to copy or edit, and it works from any directory:
+
+```
+/plugin marketplace add getpapi/papi
+/plugin install papi@papi
+```
+
+The plugin carries the server config, so PAPI is registered the moment it
+installs. It also brings two skills: `check-mcp`, which diagnoses a connection
+that isn't working, and `papi-verify`, which health-checks the current cycle.
+
+Prefer the terminal, or not on Claude Code's plugin system? Add the endpoint
+directly instead — same server, same account:
 
 ```
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp

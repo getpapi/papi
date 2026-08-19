@@ -44,6 +44,8 @@ In Claude Code, the shortest path is the plugin — two lines, nothing to copy o
 /plugin install papi@papi
 ```
 
+The plugin carries the server config, plus two skills: `check-mcp` diagnoses a connection that isn't working, and `papi-verify` health-checks the current cycle.
+
 Every tool also takes the same streamable-HTTP endpoint directly, `https://mcp.getpapi.ai/mcp`. In Claude Code that's:
 
 ```

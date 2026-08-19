@@ -21,6 +21,27 @@ Check https://mcp.getpapi.ai/healthz returns 200. If it does, the problem
 is local config; if it doesn't, the service is having a moment and the fix
 is on us.
 
+## Claude Code plugin
+
+**I installed the plugin but there are no PAPI tools.**
+The plugin registers the server; it does not sign you in. Run `claude mcp
+list` — if `papi` shows `! Needs authentication`, that is the whole problem.
+Run `/mcp`, choose **papi**, pick **Authenticate**. Or just ask Claude to run
+the `check-mcp` skill, which walks the same path and tells you the next step.
+
+**The tools are named `mcp__plugin_papi_papi__*`, not `mcp__papi__*`.**
+That is correct and not a fault. Claude Code namespaces tools that come from
+a plugin by the plugin and server name, so `orient` is
+`mcp__plugin_papi_papi__orient`. It matters if you have written a hook
+matcher, a permission rule, or a skill `allowed-tools` entry against the bare
+`mcp__papi__*` form — those will not fire for a plugin install. Either match
+the namespaced form, or add the server with `claude mcp add` instead.
+
+**How do I update the plugin?**
+`/plugin marketplace update papi`, then `/plugin install papi@papi`. The
+plugin is versioned by commit, so any fix pushed to the repo reaches you on
+the next update — there is no version number to wait for.
+
 ## Projects
 
 **My work landed in the wrong project.**
