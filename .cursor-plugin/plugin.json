@@ -1,18 +1,25 @@
 {
   "name": "papi",
-  "displayName": "PAPI",
-  "description": "Persistent project management inside your AI coding tool — plans what's next, tracks every decision, and keeps projects coherent across sessions.",
   "version": "1.0.0",
-  "author": { "name": "PAPI", "url": "https://getpapi.ai" },
+  "description": "Persistent project management inside your AI coding tool. PAPI plans what to build next, tracks every decision, and keeps projects coherent across sessions, so a new session starts where the last one left off instead of from nothing.",
+  "author": {
+    "name": "PAPI",
+    "email": "cathal@papi.ai"
+  },
   "homepage": "https://getpapi.ai",
   "repository": "https://github.com/getpapi/papi",
   "license": "MIT",
+  "logo": "papi-icon.svg",
   "keywords": [
+    "papi",
     "project-management",
     "planning",
+    "task-management",
+    "context",
     "mcp",
     "productivity",
     "developer-tools"
   ],
-  "mcp": "./mcp.json"
+  "skills": "./skills",
+  "mcpServers": "./mcp.json"
 }

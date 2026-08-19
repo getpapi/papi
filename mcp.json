@@ -1,7 +1,10 @@
 {
   "mcpServers": {
     "papi": {
-      "url": "https://mcp.getpapi.ai/mcp"
+      "url": "https://mcp.getpapi.ai/mcp",
+      "headers": {
+        "x-papi-client": "cursor-plugin"
+      }
     }
   }
 }
