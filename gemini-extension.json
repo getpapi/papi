@@ -1,0 +1,13 @@
+{
+  "name": "papi",
+  "version": "1.0.0",
+  "description": "Project management that keeps itself up to date. PAPI plans what to build next, tracks every decision, and keeps projects coherent across sessions and across tools.",
+  "mcpServers": {
+    "papi": {
+      "httpUrl": "https://mcp.getpapi.ai/mcp",
+      "headers": {
+        "x-papi-client": "gemini-extension"
+      }
+    }
+  }
+}
