@@ -92,11 +92,22 @@ Merge into `~/.codex/config.toml` (TOML, not JSON):
 [mcp_servers.papi]
 url = "https://mcp.getpapi.ai/mcp"
 
-# Bearer (recommended — already authenticated):
-[mcp_servers.papi.headers]
-Authorization = "Bearer ${PAPI_CONNECTION_TOKEN}"
-x-papi-project-id = "${PAPI_PROJECT_ID}"
+# Bearer (recommended — already authenticated).
+# Set PAPI_CONNECTION_TOKEN in the environment; Codex reads the token from
+# there rather than from the config file, so the key never lands on disk.
+bearer_token_env_var = "PAPI_CONNECTION_TOKEN"
+
+[mcp_servers.papi.http_headers]
+x-papi-project-id = "<your-project-id>"
 ```
+
+Codex names these fields `bearer_token_env_var` and `http_headers`. A
+`[mcp_servers.papi.headers]` block is not a field Codex knows, and it is dropped
+without an error, so the connection comes up unauthenticated and every tool call
+returns 401. `bearer_token` is rejected outright for URL servers — use
+`bearer_token_env_var`. To source other headers from the environment, use
+`[mcp_servers.papi.env_http_headers]`, which maps a header name to the env var
+holding its value.
 Validate `codex mcp list`. For OAuth instead, omit the headers block — then the sign-in is the user's:
 
 ```

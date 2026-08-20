@@ -1,0 +1,50 @@
+{
+  "name": "papi",
+  "version": "1.0.0",
+  "description": "Project management that keeps itself up to date. PAPI plans what to build next, tracks every decision, and keeps projects coherent across sessions and across tools.",
+  "author": {
+    "name": "PAPI",
+    "email": "cathal@papi.ai",
+    "url": "https://getpapi.ai"
+  },
+  "homepage": "https://getpapi.ai",
+  "repository": "https://github.com/getpapi/papi",
+  "license": "MIT",
+  "keywords": [
+    "papi",
+    "project-management",
+    "planning",
+    "task-management",
+    "context",
+    "mcp",
+    "productivity",
+    "developer-tools"
+  ],
+  "skills": "./skills/",
+  "mcpServers": "./.codex-plugin/mcp.json",
+  "interface": {
+    "displayName": "PAPI",
+    "shortDescription": "Plans what to build next and keeps your project coherent across sessions.",
+    "longDescription": "Context files tell your AI how a project works. They do not tell it what to build next, they do not know what is half finished, and you are the one keeping them true. PAPI is the project layer that maintains itself: it plans the next work, briefs your AI on each task, records what shipped and what broke, and keeps every decision with the reasoning behind it. Your assistant writes all of that while it works, so there is no documentation left for you to maintain. The same plan, board and history are there from Codex, ChatGPT, Claude Code, Cursor and VS Code, so switching tools does not cost you the project.",
+    "developerName": "PAPI",
+    "category": "Productivity",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://getpapi.ai",
+    "privacyPolicyURL": "https://getpapi.ai/privacy",
+    "termsOfServiceURL": "https://getpapi.ai/terms",
+    "defaultPrompt": [
+      "Use PAPI to tell me where I left off on this project and what to do next.",
+      "Use PAPI to plan the next stretch of work and brief me on the first task.",
+      "Use PAPI to tell me why we decided to build it this way.",
+      "Use PAPI to record what I just built and hold it for review."
+    ],
+    "brandColor": "#5a4b8a",
+    "composerIcon": "./papi-icon.png",
+    "logo": "./papi-icon.png",
+    "screenshots": [
+      "./assets/hub.png",
+      "./assets/board.png",
+      "./assets/decisions.png"
+    ]
+  }
+}

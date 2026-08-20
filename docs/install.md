@@ -114,6 +114,33 @@ Add to `~/.codex/config.toml`:
 url = "https://mcp.getpapi.ai/mcp"
 ```
 
+Check it registered with `codex mcp list`. Codex prompts for browser sign-in on
+first connection; that step is yours and no agent can do it for you.
+
+To connect with an API key from the dashboard's Connect panel instead of signing
+in through the browser:
+
+```toml
+[mcp_servers.papi]
+url = "https://mcp.getpapi.ai/mcp"
+bearer_token_env_var = "PAPI_CONNECTION_TOKEN"
+
+[mcp_servers.papi.http_headers]
+x-papi-project-id = "<your-project-id>"
+```
+
+Set `PAPI_CONNECTION_TOKEN` in your environment. Codex reads the token from
+there, so the key never lands in the config file.
+
+Two field names matter here, because getting them wrong fails silently rather
+than loudly. Codex calls these `bearer_token_env_var` and `http_headers`. A
+`[mcp_servers.papi.headers]` block is not a field Codex recognises and is
+discarded without an error, leaving the connection unauthenticated until the
+first tool call returns 401. `bearer_token` is rejected outright for URL
+servers. For other headers whose values come from the environment, use
+`[mcp_servers.papi.env_http_headers]`, which maps a header name to the env var
+holding its value.
+
 ## Any other MCP client
 
 Use the generic endpoint `https://mcp.getpapi.ai/mcp`. Clients that support
