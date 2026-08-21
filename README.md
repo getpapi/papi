@@ -13,7 +13,7 @@
 
 ![A cycle running in PAPI: the hub, the board, the decision log, and the project's history](assets/tour.gif)
 
-AI coding tools are great at writing code and terrible at remembering why. Every new session starts from zero: you re-explain the project, the decisions, the plan. PAPI is the layer that fixes that. It gives your AI assistant structured project memory (plans, builds, reviews, decisions) that persists across sessions, tools, and teammates.
+AI coding tools are great at writing code and terrible at holding a direction. Scope grows, plans change, and the decisions behind them get made in a chat window and lost there. PAPI keeps the project on course. It gives your assistant structured plan, build, review and release cycles, plus a decision trail recording what was chosen, what was dropped, and why. Your assistant writes and reads it while it works, so it stays current without anyone maintaining it.
 
 You connect it once. From then on, your assistant starts every session knowing which cycle you're on, what's in flight, and what to do next.
 
