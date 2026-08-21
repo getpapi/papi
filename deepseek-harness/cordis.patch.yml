@@ -1,0 +1,10 @@
+- insert:
+    - id: mcp-papi
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        serverName: papi
+        transport: streamable-http
+        url: https://mcp.getpapi.ai/mcp
+        headers:
+          Authorization: !!js '`Bearer ${process.env.PAPI_CONNECTION_TOKEN}`'
+        failOnStartupError: true

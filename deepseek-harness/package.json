@@ -1,0 +1,45 @@
+{
+  "name": "@papi-ai/deepseek-harness",
+  "version": "0.1.0",
+  "description": "Connect DeepSeek Harness to PAPI through the official Streamable HTTP MCP client.",
+  "license": "MIT",
+  "homepage": "https://getpapi.ai",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/getpapi/papi.git",
+    "directory": "deepseek-harness"
+  },
+  "bugs": {
+    "url": "https://github.com/getpapi/papi/issues"
+  },
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "mcp",
+    "papi",
+    "project-management"
+  ],
+  "files": [
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "papi": {
+    "tokenEnvironment": "PAPI_CONNECTION_TOKEN",
+    "testedHarnessVersion": "0.1.0-rc.6"
+  }
+}

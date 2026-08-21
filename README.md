@@ -54,6 +54,14 @@ claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 
 Either way, finish with `/mcp` → **papi** → **Authenticate**.
 
+DeepSeek Harness users can install the repository-owned bundle after creating a PAPI connection token:
+
+```text
+dsh plugin --profile web add @papi-ai/deepseek-harness
+```
+
+See [PAPI for DeepSeek Harness](deepseek-harness/README.md) for token handling, verification, compatibility, and removal.
+
 Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client is in [docs/install.md](docs/install.md).
 
 ## What you get
