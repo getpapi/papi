@@ -57,7 +57,16 @@ list is written against the bare name, it will not fire for a plugin install.
 ### Default — bearer headers (nothing to hand back)
 
 Ask the USER for two values from the Connect panel at https://getpapi.ai. Never
-generate them. Then add a remote/HTTP MCP server named `papi` pointing at
+generate them — they are in the "This is your project" block: project id shown
+already, connection token behind one "Reveal" click, each with a Copy button.
+
+Substitute BOTH real values into every `<connection-token>` / `<project-id>`
+slot below before you write the config. Never hand over a config that still
+contains a placeholder (`<connection-token>`, `<project-id>`, `YOUR_PAPI_TOKEN`,
+etc.) — it will not connect and the user gets a silent failure with no error.
+No real values yet? STOP and ask.
+
+Then add a remote/HTTP MCP server named `papi` pointing at
 `https://mcp.getpapi.ai/mcp` with these headers:
 
 ```
