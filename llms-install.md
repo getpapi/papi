@@ -51,7 +51,7 @@ Use environment-variable or secret-store interpolation for both values. Never wr
 
 **Why a static header at all?** This is the MCP-standard shape, not a PAPI-specific weakness — the same pattern any HTTP-transport MCP server uses (a bearer credential in the client's own config), and it's what makes "no browser step" possible. Two things you (the setup agent) should still do regardless of which client you're configuring: add the config file (`.mcp.json`, `~/.codex/config.toml`, or wherever the client stores it) to `.gitignore` if it isn't already — see the gitignore step below — and, on a shared or multi-user machine, tell the user to lock the file down to their own account: `chmod 600 <config file>`. Neither step is required for the connection to work; both cost nothing and close the two realistic exposure paths (an accidental commit, another local account reading the file).
 
-**Why env-var interpolation over an OS keychain or token expiry:** three hardening options exist for the token above — (1) env-var/secret-store interpolation (the `${PAPI_CONNECTION_TOKEN}` pattern above), (2) OS-keychain storage, (3) adding an `expires_at` + rotation flow to the token itself. This guide recommends (1) and stops there. A keychain integration would need a per-OS credential-store dependency in every client we support, which most CLI/agent clients (Claude Code, Codex, most others) don't have a plugin surface for today — real infrastructure, not a doc change, and disproportionate to a config-file-storage concern. A token-expiry migration would need a new `api_keys.expires_at` column plus a rotation UX, and — critically — must never retroactively invalidate a live token without a migration path, which makes it a genuine feature, not a hardening tweak. Env-var interpolation needs none of that: it's zero new infrastructure, works identically across every client already listed in this guide, and is already the documented default above.
+**Why env-var interpolation over an OS keychain or token expiry:** three hardening options exist for the token above — (1) env-var/secret-store interpolation (the `${PAPI_CONNECTION_TOKEN}` pattern above), (2) OS-keychain storage, (3) adding an `expires_at` + rotation flow to the token itself. This guide recommends (1) for clients that support interpolation and stops there. Pi's current MCP extension does not expand environment variables, so its section uses explicit placeholders that must be replaced with the user's values and then kept out of version control. A keychain integration would need a per-OS credential-store dependency in every client we support, which most CLI/agent clients (Claude Code, Codex, most others) don't have a plugin surface for today — real infrastructure, not a doc change, and disproportionate to a config-file-storage concern. A token-expiry migration would need a new `api_keys.expires_at` column plus a rotation UX, and — critically — must never retroactively invalidate a live token without a migration path, which makes it a genuine feature, not a hardening tweak.
 
 ### Alternative: OAuth (browser sign-in)
 
@@ -211,6 +211,32 @@ mcp_servers:
 Run `/reload-mcp` in an open session to load it without a restart, and validate with `hermes mcp test papi`.
 
 For OAuth instead: run `hermes mcp add papi --url https://mcp.getpapi.ai/mcp --auth oauth`, then the user authorises in the browser (tokens persist to `~/.hermes/mcp-tokens/papi.json`). That command writes `url` and `auth` only — if the user has more than one PAPI project, add a `headers:` map with `x-papi-project-id` to the YAML afterwards, or every call has to name the project explicitly.
+
+### Pi coding agent
+
+Install Pi's MCP extension, then save this project-level config as `.pi/mcp.json`:
+
+```bash
+pi install npm:pi-mcp-extension
+```
+
+```json
+{
+  "mcpServers": {
+    "papi": {
+      "transport": "streamable-http",
+      "lifecycle": "eager",
+      "url": "https://mcp.getpapi.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
+        "x-papi-project-id": "YOUR_PROJECT_ID"
+      }
+    }
+  }
+}
+```
+
+The current Pi extension documentation confirms this `mcpServers` + Streamable HTTP shape but does not document OAuth for this configuration. Replace both placeholders with the values from the Connect panel, keep the file out of version control, and check the connection with `/mcp`.
 
 ### Any other Streamable HTTP MCP client
 Configure a remote server named `papi` at `https://mcp.getpapi.ai/mcp`. Prefer the two bearer headers above. If the client only does OAuth, add it without headers and have the user complete the client's browser auth flow.
