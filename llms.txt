@@ -74,6 +74,12 @@ Authorization: Bearer <connection-token>
 x-papi-project-id: <project-id>
 ```
 
+Optional third header: `x-papi-workspace: <the checkout's absolute path>`. Any
+client may send it. PAPI uses it only as an advisory cross-check — if it
+disagrees with the pinned project the write still goes through, but its scope
+receipt carries a warning, so a wrong project pin surfaces on the write instead
+of silently. Omit it and nothing changes.
+
 In Claude Code:
 
 ```
