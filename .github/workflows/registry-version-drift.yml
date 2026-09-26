@@ -1,0 +1,72 @@
+name: Registry version drift
+
+# The missing half of publish-mcp-registry.yml.
+#
+# That workflow only runs when someone pushes a change to server.json. Which is
+# fine, except nothing ever checked whether server.json *should* change — so on
+# 2026-09-26 the listing was found pinned at 0.7.85, roughly twelve releases
+# behind the published @papi-ai/server package, and had been silent for five
+# weeks. A registry page advertising a stale version is a bad first impression:
+# the npx install command on the listing resolved to an old build.
+#
+# This job notices when npm has moved on. It does not edit anything — bumping
+# server.json is a deliberate act, and the push is what publishes.
+#
+# Designed against the same rule the C358 incident produced: never hand a
+# credential to a command you have not verified resolves to the tool you think
+# it does. This job reads two public values and compares them. It authenticates
+# nothing.
+
+on:
+  schedule:
+    # Daily, off the round hour. Weekly would also do; a 5-week drift is the
+    # failure this exists to prevent, so once a day is comfortably enough.
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Compare server.json against the published npm package
+        run: |
+          set -euo pipefail
+
+          manifest_version="$(jq -r '.version' server.json)"
+          package="$(jq -r '.packages[] | select(.registryType == "npm") | .identifier' server.json)"
+          package_version="$(jq -r '.packages[] | select(.registryType == "npm") | .version' server.json)"
+
+          if [ -z "$package" ] || [ "$package" = "null" ]; then
+            echo "::error title=No npm package declared::server.json has no packages[] entry with registryType == \"npm\"."
+            exit 1
+          fi
+
+          published_version="$(npm view "$package" version)"
+
+          echo "server.json .version            : $manifest_version"
+          echo "server.json packages[].version  : $package_version"
+          echo "npm latest                      : $published_version  ($package)"
+          echo
+
+          drift=0
+
+          if [ "$manifest_version" != "$published_version" ]; then
+            echo "::error title=MCP Registry listing is stale::server.json declares version $manifest_version but $package is published at $published_version. Bump server.json to $published_version and push to main — publish-mcp-registry.yml will republish automatically."
+            drift=1
+          fi
+
+          if [ "$package_version" != "$published_version" ]; then
+            echo "::error title=server.json package pin is stale::packages[].version is $package_version but $package is published at $published_version. The npx/stdio install command on the listing resolves to the pinned build, so this is what users would actually get."
+            drift=1
+          fi
+
+          if [ "$drift" -ne 0 ]; then
+            exit 1
+          fi
+
+          echo "✅ server.json is in sync with $package@$published_version"
