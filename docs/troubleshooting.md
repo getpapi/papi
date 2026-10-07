@@ -2,6 +2,13 @@
 
 ## Connection
 
+**I just connected PAPI but my assistant can't see its tools.**
+This is the most common one, and nothing is broken. Most AI tools (Cursor,
+VS Code, claude.ai, ChatGPT and others) load their tool list when a
+conversation starts, so PAPI is invisible in the chat where you added it.
+Start a new conversation and ask your assistant to run `orient`. In Claude
+Code you can reload in place with `/mcp` instead.
+
 **The MCP server doesn't appear in my tool.**
 Restart the tool after adding the config; most clients only read MCP config
 at startup. For Claude Code, `claude mcp list` shows what's registered.

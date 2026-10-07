@@ -8,8 +8,26 @@ PAPI connects to your AI tool as an MCP server. There are two transports:
 - **Local (advanced).** Your tool runs `@papi-ai/server` from npm locally.
   Useful when you want the process under your own control.
 
-Pick your tool below. Every path ends the same way: run `setup` once, then
-`orient` at the start of every session.
+**Easiest: let your AI do it.** Paste this to your assistant and it walks you
+through connecting, setup, your first plan and your first build:
+
+> Read https://getpapi.ai/llms.txt and set up PAPI
+
+**Two ways to sign in to the remote server:**
+
+- **Connection token (default, no browser step).** Copy the project id and
+  connection token from the Connect panel on getpapi.ai (under "This is your
+  project") and add them as headers:
+  `Authorization: Bearer <connection-token>` and `x-papi-project-id: <project-id>`.
+  The per-client header configs are in [llms.txt](../llms.txt).
+- **Browser sign-in.** Add the URL on its own and approve the sign-in in the
+  browser. The per-tool steps below use this path.
+
+Chat apps (claude.ai, ChatGPT, Claude Desktop) add PAPI as a custom connector
+in their settings, using `https://mcp.getpapi.ai/mcp`, then sign in.
+
+Pick your tool below. Every path ends the same way: start a new conversation,
+run `orient`, then `setup` once for a new project.
 
 ## Claude Code
 
@@ -43,7 +61,10 @@ server will show `! Needs authentication`.
 > Run `/mcp`, choose **papi**, and pick **Authenticate**. A browser tab opens —
 > sign in, and you're connected.
 
-There is no CLI command for this. Only you can approve it.
+On Claude Code v2.1.186+ there is also a login subcommand you can type yourself
+in your own terminal (the words are: claude / mcp / login / papi), which opens
+the browser directly. It needs a real terminal, so your assistant cannot run it
+for you. Either way, only you can approve it.
 
 Once connected:
 
