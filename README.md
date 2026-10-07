@@ -27,13 +27,14 @@ You connect it once. From then on, your assistant starts every session knowing w
 
 > Read https://getpapi.ai/llms.txt and set up PAPI
 
-That's the whole install. Your assistant reads the runbook for whichever tool it's running in and wires up the connection itself. (Same instructions live in this repo as [llms.txt](llms.txt) and [llms-install.md](llms-install.md) if your assistant can't fetch URLs.)
+Your assistant reads the runbook and walks you through the whole first run: checking it's in the right project folder, connecting, setting up your project, planning your first cycle, and building your first task. It works in coding tools and in chat apps like claude.ai and ChatGPT, and you don't need to be a developer. (The same runbook lives in this repo as [llms.txt](llms.txt) and [llms-install.md](llms-install.md) if your assistant can't fetch URLs.)
 
-**Then authenticate — this part is yours.** PAPI signs in over OAuth, and no AI can click through a browser consent screen for you. Your assistant will tell you exactly where to click; until you do, the server sits at `Needs authentication` and no tool call will work. This is the step people miss.
+**The one thing only you can do.** You need a free account at [getpapi.ai](https://getpapi.ai). After that there are two ways to connect:
 
-Once you're connected, tell your assistant:
+- **Connection token (default).** Open the Connect panel on getpapi.ai, copy the project id and connection token under "This is your project", and hand them to your assistant. It puts them in your tool's config and PAPI works straight away, with no browser step.
+- **Browser sign-in.** Your assistant adds the server and you approve it in the browser. No assistant can click through that screen for you, and until you do the server shows `Needs authentication`.
 
-> Run the `setup` tool to scaffold this project, then run `orient` and tell me which cycle this project is on.
+Most tools only load a new connection when a conversation starts, so open a fresh conversation after connecting and ask your assistant to run `orient`.
 
 ### Prefer to wire it up yourself?
 
@@ -52,7 +53,11 @@ Every tool also takes the same streamable-HTTP endpoint directly, `https://mcp.g
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
 ```
 
-Either way, finish with `/mcp` → **papi** → **Authenticate**.
+Either way, finish with `/mcp` → **papi** → **Authenticate**. Or skip the browser step entirely with the connection token from the Connect panel:
+
+```
+claude mcp add --transport http papi https://mcp.getpapi.ai/mcp --header "Authorization: Bearer YOUR_CONNECTION_TOKEN" --header "x-papi-project-id: YOUR_PROJECT_ID"
+```
 
 DeepSeek Harness users can install the repository-owned bundle after creating a PAPI connection token:
 
@@ -109,7 +114,8 @@ PAPI exposes these MCP tools to your assistant. The whole loop is a handful of c
 - **build_list** — list the current cycle's tasks and their handoffs.
 - **build_execute** — start a task (creates a branch and handoff) and complete it (records the build report).
 - **review_list** / **review_submit** — surface finished builds and record accept / request-changes / reject verdicts.
-- **release** — merge completed work and roll the cycle forward.
+- **release** / **close_cycle** — finish the cycle, with a published version (`release`) or without one (`close_cycle`).
+- **tutorial_mode** — turn on short explanations and one clear next step in every reply. Handy for your first few cycles.
 
 **Board and backlog**
 - **board_view** — read the project board and any task.
@@ -126,6 +132,10 @@ PAPI exposes these MCP tools to your assistant. The whole loop is a handful of c
 **Docs and projects**
 - **doc_register** / **doc_search** — register and find project reference docs.
 - **project_list** / **project_switch** / **project_create** — manage multiple PAPI projects.
+
+**Teams**
+- **join** — join a project a teammate invited you to.
+- **contributor_list** / **contributor_add** — see and manage who works on the project.
 
 ## Documentation
 

@@ -1,156 +1,519 @@
-# PAPI — agent install runbook
+# PAPI
 
-> PAPI (Persistent Adaptive Project Intelligence) keeps a software project on course while an AI assistant builds it. Every new session starts from zero; PAPI holds the plan, the decisions and the direction across all of them, and gives any MCP-capable AI coding tool structured plan/build/review cycles, decision tracking, and a methodology that compounds cycle over cycle.
+> Your AI builds. PAPI steers.
 
-**Canonical live version: https://getpapi.ai/llms.txt — fetch that URL if you can.**
-It carries the current per-client config snippets (Claude Code, Cursor, VS Code,
-Windsurf, Codex, generic MCP) and the full docs map, generated from the live
-endpoint so it can never drift. This file is the GitHub-resident copy of the
-facts that don't change.
+PAPI is a project manager that lives inside the AI tool you already use. It keeps the plan, the decisions and the progress of a project in one place, so every new session picks up where the last one stopped and you stay in control of where the project goes. You do not need to be a developer to use it.
 
-## The two facts that govern every client
+PAPI is one hosted connection (an MCP server at https://mcp.getpapi.ai/mcp) plus a dashboard at https://getpapi.ai. It works with Claude Code, Cursor, VS Code, Windsurf, Codex, claude.ai, ChatGPT, Claude Desktop, or any other AI tool that can add an MCP server.
 
-1. PAPI is a single REMOTE MCP server at `https://mcp.getpapi.ai/mcp`. There is
-   no package to install and no local process to run — add the URL as a
-   remote/HTTP MCP server named `papi`.
-2. There are two ways to authenticate it, and they differ in whether YOU can
-   finish the job. On the DEFAULT bearer path you can: the user gives you a
-   connection token and a project id from the Connect panel at
-   https://getpapi.ai, you write them into the config as headers, and the server
-   is live immediately. On the OAuth path you cannot: adding the server does NOT
-   authenticate it, the connection sits at "Needs authentication", and only a
-   human can complete a browser sign-in. Prefer the path you can finish. A user
-   with no PAPI account signs up at https://getpapi.ai first.
+## If you are the AI reading this: how to run this setup
 
-Why bearer is the default (C359): across the whole install history, 41 of 72
-attempts registered an OAuth client and then died at the browser hop — the
-client opens the system default browser, which usually has no getpapi.ai
-session, so the user lands on a login wall mid-install. OAuth still works and is
-still supported; it is simply no longer the road we point you down first.
+The user pasted "Read https://getpapi.ai/llms.txt and set up PAPI". Your job is to get them from nothing to their first finished task, following the steps below in order. Many users are not developers. So:
 
-The hosted endpoint above is the default and recommended path. A local stdio
-runtime is also supported for advanced setups: `npx @papi-ai/server`,
-authenticated with an API key instead of a browser sign-in. See "Local runtime
-(advanced)" in [llms-install.md](llms-install.md).
+- **Talk in plain language.** Say what each step does for their project in one sentence before you do it. Words like MCP, header, token, config, repo and branch need a short plain explanation the first time, or leave them out.
+- **Ask one question at a time** and wait for the answer.
+- **Do every step you can do yourself.** Only hand the user the steps that need a person: signing up, clicking through a browser sign-in, or changing settings in an app you cannot control.
+- **Do not skip ahead.** Each step depends on the one before it.
+- **Remember where you are.** If the user has to start a new conversation, tell them what to say there so the next session can pick up at the right step (for example: "PAPI is connected, run orient and continue the setup").
 
-## Connect — Claude Code, the plugin (shortest OAuth path)
+## The first-run path
 
-Two lines, inside Claude Code:
+### Step 0 — Ask about the account
 
+**Ask the user: "Do you already have a getpapi.ai account?"**
+
+- **No account** → send them to https://getpapi.ai to sign up first (it takes a minute with GitHub or Google). You cannot do signup for them; it is a browser action. Wait until they say they are in.
+- **Yes** → carry on.
+
+### Step 1 — Find out where you are
+
+Ask which kind of tool they are using, unless it is obvious:
+
+- **A coding tool that can edit files** (Claude Code, Cursor, VS Code, Windsurf, Codex and similar). Check the folder this session is running in, show the user its path, and ask: "Is this the project you want PAPI to manage?" If it is not, ask them to open the right folder (or start the tool from it) and come back. Then find out:
+  - **New idea or existing project?** An empty folder is fine for a new idea. For an existing project, setup will read what is already there.
+  - **Is there a code repository (Git/GitHub)?** It is optional. PAPI works without one. If there is one, PAPI can link it later so the dashboard shows the real work. Never tell the user they need Git to start.
+- **A chat app** (claude.ai, ChatGPT, Claude Desktop and similar). There is no project folder here, and that is fine. PAPI learns about the project from the conversation. Use the "Chat apps" connect steps below. Building in a chat app means the AI writes things for the user (plans, copy, research, code to paste) rather than editing files directly. If the project is software, a coding tool is the best place to do the building later, and it can connect to the same PAPI project.
+
+### Step 2 — Connect PAPI
+
+- **Coding tool, and the user can open the Connect panel at https://getpapi.ai** → use "Bearer — the default" below. You can finish it yourself once they hand you two values from that panel.
+- **Chat app** → use "Chat apps" below.
+- **The user would rather sign in through the browser, or you cannot get a clear answer** → use "Connect over OAuth (alternative)" below.
+
+Before your first PAPI call, check your AI client's MCP permission settings. If the client uses an allowlist, permit the `mcp__papi__*` namespace before running `setup` or filing a bug. In Claude Code, add `mcp__papi__*` to `permissions.allow` in `.claude/settings.json`, or approve the first prompt with "don't ask again".
+
+### Step 3 — Start a new conversation and run `orient`
+
+Most AI tools only load new connections when a conversation starts, so PAPI's tools will not appear in the conversation where you connected it. That is normal and not a failure. Tell the user to start a new conversation in the same project folder (Claude Code can reload in place with `/mcp`, Hermes with `/reload-mcp`) and say: "PAPI is connected. Run orient and continue the setup."
+
+`orient` shows which project PAPI is connected to and what to do next. Check the project name matches what the user is working on. If it does not, see "Prove the connection" below before writing anything.
+
+### Step 4 — Run `setup`
+
+Tell the user first: "Setup gets PAPI to know your project. It writes a short brief (what you are building and who it is for), records the first big decisions, and for an existing project suggests some starting tasks. It takes a few minutes."
+
+- **Existing project in a coding tool** → set `existing_project: true`. Gather a quick scan of the folder (top-level files and folders, the README, the package manifest, recent commit messages if there are any) and pass it as `codebase_scan`. PAPI cannot see the user's files itself.
+- **New idea, or a chat app** → ask the user in two or three plain questions what they are building, who it is for, and what problem it solves. Pass their answers in.
+
+Setup runs in two passes: the first returns instructions for you to follow, the second saves what you wrote. Tell the user what each pass is doing.
+
+### Step 5 — Walk the user through what setup created
+
+Do not move straight on. Show the user, in plain words:
+
+1. **The brief.** Summarise it in three or four lines and ask whether it is right.
+2. **The decisions.** List them with one line each on what they mean. Ask if any are wrong or missing. Fix them with `strategy_change`.
+3. **The starting tasks**, if setup created any. Ask whether to change, drop or add anything. Edit with `board_edit`. Add new ones with `idea`.
+
+Then offer to fill the backlog properly before planning: "Want me to do a quick research pass or an audit first? For example: a look at the existing code, security basics, the user experience, or what similar products do. I will add anything worth doing as backlog ideas." If they say yes, do it and file each finding with `idea`.
+
+If the user is new to this way of working, suggest turning on `tutorial_mode`. It makes PAPI's replies add short explanations and one clear next step.
+
+### Step 6 — Run `plan`
+
+Tell the user first: "Plan looks at everything in the backlog and picks the most important handful of tasks for this round of work, called a cycle. Each task gets clear written instructions (a build handoff) that I follow when I build it. You get to approve the plan."
+
+Run `plan`. It also works in two passes. Then show the user the tasks in the cycle in plain words and ask if they are happy with it before building.
+
+### Step 7 — Build the first task
+
+Tell the user: "Now I build the first task. PAPI tracks it from start to finish, so next time we both know exactly where it got to."
+
+1. `build_list` shows the cycle's tasks. Pick the first one, or the one the user wants.
+2. `build_execute` with the task id starts it and gives you its build handoff.
+3. Do the work the handoff describes. In a coding tool, run it from the project folder confirmed in Step 1.
+4. `build_execute` again to finish it, with a short report of what was built and anything that surprised you.
+5. Show the user what changed and ask them to check it. Record their verdict with `review_submit`.
+6. Carry on with the next task. When every task in the cycle is done and reviewed, `orient` tells you how to close the cycle. Then run `plan` again for the next one.
+
+### Every session after this
+
+Start with `orient`. It tells you where the project is and what to do next. New ideas that come up mid-task go in the backlog with `idea`, so the current task stays on track. The dashboard at https://getpapi.ai shows the plan, the board and the decisions at any time.
+
+## Connecting — the details
+
+Machine-readable connect config only (plain text, no prose): https://getpapi.ai/install.txt
+
+PAPI is a single REMOTE MCP server at `https://mcp.getpapi.ai/mcp`. There is no package to install and no local process to run. You add the URL as a remote/HTTP MCP server named `papi`. There are two ways to sign it in, and they differ in whether YOU can finish the job:
+
+- **⭐ Default — bearer token.** The user copies two values from the Connect panel at https://getpapi.ai and hands them to you. You put them in the tool's config and PAPI works the moment it is added: no browser hop, no separate sign-in step. This only works once Step 0 confirmed the user has an account.
+- **Alternative — OAuth (browser sign-in).** Nothing for the user to copy, but they must finish a browser sign-in that you cannot do for them, in the same browser they signed up in. More than half of past installs that took this path stalled at that sign-in, usually because the tool opened a different browser with no getpapi.ai session. Use it when the user prefers it, the tool cannot send static headers, or you cannot get a clear answer about the account.
+
+Every sign-in step in the OAuth section is marked "HUMAN STEP — do not run this yourself". Those blocks are for the USER, not for you. Do not run anything inside one, and do not turn it into a shell command: an agent shell has no TTY, so the sign-in cannot complete there. Pass the block on and wait.
+
+## Bearer — the default
+
+**Only use this section once Step 0 confirmed the user has an account and can copy the two values.** If you have not checked, go back to Step 0. This section cannot complete without them.
+
+Two values, both copied by the USER from the Connect panel at https://getpapi.ai: a **connection token** and a **project id**. You never generate, guess or invent either. Ask for them, and say WHERE they are in the same breath, because "paste your connection token" with no location is where this stalls:
+
+  Both sit in the Connect panel directly under the install instruction they
+  copied, in the block headed "This is your project". The project id is on
+  screen already, labelled "Project id". The connection token is labelled
+  "Connection token" and takes one click on "Reveal". Each has a Copy button.
+
+Then write them into the client's config as headers:
+
+  `Authorization: Bearer <connection-token>`
+  `x-papi-project-id: <project-id>`
+
+Optional third header, `x-papi-workspace: <your repo root or working directory>`. Any MCP client may set it to the absolute path of the checkout this session belongs to. PAPI uses it only as an advisory cross-check: if it disagrees with the pinned project, the mutation still goes through but its scope receipt carries a warning, so a wrong project pin surfaces on the write instead of silently. Omit it and nothing changes.
+
+The server is authenticated the moment it is added. No browser step and nothing to hand back. If the `papi` tools are already in your tool list, call `orient`. If they are not, the install did NOT fail: most tools load connections at conversation start, so go to Step 3 of the first-run path (new conversation, then `orient`).
+
+**Before you write any config below: you must have the REAL connection token and REAL project id in hand.** The blocks below carry `YOUR_CONNECTION_TOKEN` and `YOUR_PROJECT_ID` as placeholders — replace BOTH with the values the user copied from the Connect panel. Never write a config that still contains `YOUR_CONNECTION_TOKEN`, `YOUR_PROJECT_ID`, `<YOUR_PAPI_TOKEN>`, or any other placeholder: it will not connect, and the user gets a silent failure with no idea why. If you do not have both real values yet, STOP and ask for them (they are in the "This is your project" block — project id shown already, token behind one "Reveal" click, each with a Copy button). Do not proceed on a guess.
+
+Per-client config — substitute the two real values into every `YOUR_...` placeholder before handing it over:
+
+**Claude Code** — run from the project root:
+
+  `claude mcp add --transport http papi https://mcp.getpapi.ai/mcp --header "Authorization: Bearer YOUR_CONNECTION_TOKEN" --header "x-papi-project-id: YOUR_PROJECT_ID"`
+
+**Cursor** — `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "papi": {
+      "url": "https://mcp.getpapi.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
+        "x-papi-project-id": "YOUR_PROJECT_ID"
+      }
+    }
+  }
+}
 ```
-/plugin marketplace add getpapi/papi
-/plugin install papi@papi
+
+**VS Code (GitHub Copilot)** — note the `servers` key, not `mcpServers`:
+
+```json
+{
+  "servers": {
+    "papi": {
+      "url": "https://mcp.getpapi.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
+        "x-papi-project-id": "YOUR_PROJECT_ID"
+      }
+    }
+  }
+}
 ```
 
-The plugin bundles the remote server config, so there is nothing to copy and
-nothing to edit. The human still completes the browser sign-in — which is what
-makes this the shortest OAuth route rather than the shortest route overall. If
-the user has a connection token, the bearer path below is fewer steps and needs
-no browser at all.
+**Codex** — `~/.codex/config.toml`:
 
-Note for agents: plugin-bundled tools are namespaced `mcp__plugin_papi_papi__*`
-rather than `mcp__papi__*`. If a hook matcher, permission rule or allowed-tools
-list is written against the bare name, it will not fire for a plugin install.
+```toml
+[mcp_servers.papi]
+url = "https://mcp.getpapi.ai/mcp"
 
-## Connect (generic — every client)
-
-### Default — bearer headers (nothing to hand back)
-
-Ask the USER for two values from the Connect panel at https://getpapi.ai. Never
-generate them — they are in the "This is your project" block: project id shown
-already, connection token behind one "Reveal" click, each with a Copy button.
-
-Substitute BOTH real values into every `<connection-token>` / `<project-id>`
-slot below before you write the config. Never hand over a config that still
-contains a placeholder (`<connection-token>`, `<project-id>`, `YOUR_PAPI_TOKEN`,
-etc.) — it will not connect and the user gets a silent failure with no error.
-No real values yet? STOP and ask.
-
-Then add a remote/HTTP MCP server named `papi` pointing at
-`https://mcp.getpapi.ai/mcp` with these headers:
-
-```
-Authorization: Bearer <connection-token>
-x-papi-project-id: <project-id>
+[mcp_servers.papi.headers]
+Authorization = "Bearer YOUR_CONNECTION_TOKEN"
+x-papi-project-id = "YOUR_PROJECT_ID"
 ```
 
-Optional third header: `x-papi-workspace: <the checkout's absolute path>`. Any
-client may send it. PAPI uses it only as an advisory cross-check — if it
-disagrees with the pinned project the write still goes through, but its scope
-receipt carries a warning, so a wrong project pin surfaces on the write instead
-of silently. Omit it and nothing changes.
+**Pi coding agent** — install `pi-mcp-extension`, then save this as `.pi/mcp.json`:
 
-In Claude Code:
-
-```
-claude mcp add --transport http papi https://mcp.getpapi.ai/mcp   --header "Authorization: Bearer <connection-token>"   --header "x-papi-project-id: <project-id>"
+```bash
+pi install npm:pi-mcp-extension
 ```
 
-The server is authenticated the moment it is added. Call `orient` and you are
-in — there is no second step on this path. The config file now holds a
-credential: add it to `.gitignore`.
-
-### Alternative — OAuth (only if the user asks, or the client cannot send headers)
-
-Add the server without headers:
-
+```json
+{
+  "mcpServers": {
+    "papi": {
+      "transport": "streamable-http",
+      "lifecycle": "eager",
+      "url": "https://mcp.getpapi.ai/mcp",
+      "headers": {
+        "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
+        "x-papi-project-id": "YOUR_PROJECT_ID"
+      }
+    }
+  }
+}
 ```
-claude mcp add --transport http papi https://mcp.getpapi.ai/mcp
+
+Pi's current extension documentation confirms this Streamable HTTP shape but does not document OAuth for this server. Use the bearer values from the Connect panel and keep `.pi/mcp.json` out of version control.
+
+**Any other MCP client** — the bare config:
+
+```json
+{
+  "url": "https://mcp.getpapi.ai/mcp",
+  "headers": {
+    "Authorization": "Bearer YOUR_CONNECTION_TOKEN",
+    "x-papi-project-id": "YOUR_PROJECT_ID"
+  }
+}
 ```
+
+The token is a secret. Put the config file in `.gitignore` — it carries a credential. Never paste a real token into a shared channel, an issue, or a commit.
+
+## Connect over OAuth (alternative)
+
+Use this section when the user asks for a browser sign-in or their tool cannot send static headers. It works, but it needs a browser sign-in you cannot do for them, and that is where most stalled installs stopped.
+
+Find the user's tool. Give them THAT block's step, then hand back the browser sign-in.
+
+**Multi-project? Pin the project first.** The per-client blocks below connect over OAuth. If you have (or will create) more than one PAPI project, do not rely on an account default: mutation calls fail closed until the target is uniquely identified. Pin it with an `x-papi-project-id: <project-id>` header: open your project in the dashboard at https://getpapi.ai and read the project id off its Connect panel, under "This is your project", where it is displayed as a labelled value with a Copy button.
+
+### Claude Code
+Shortest path — the plugin. Two lines, inside Claude Code:
+
+  `/plugin marketplace add getpapi/papi`
+  `/plugin install papi@papi`
+
+That adds the remote server for them; the human then signs in when the browser opens. Nothing runs locally and there is no config file to edit.
+
+Prefer to add the server directly instead? Run from the project root:
+
+  `claude mcp add --transport http papi https://mcp.getpapi.ai/mcp`
 
 That command is yours to run. The sign-in that follows is not:
 
-```
-+-- HUMAN STEP — do not run this yourself ----------------------------
-| Hand this step to the user. Only a person can complete a browser OAuth.
-|
-| Tell them, in their own Claude Code session, either:
-|   - open the  /mcp  panel, choose papi, and pick Authenticate.
-|     Works on every version, so lead with this one; or
-|   - on Claude Code v2.1.186+, the mcp-login subcommand against the papi
-|     server — the four words are:  claude / mcp / login / papi  — which
-|     opens the browser directly.
-|
-| Do NOT run either yourself, and do not retry in a background shell, a
-| subshell, or a new terminal process. An agent shell is not a TTY, so the
-| OAuth prompt fails with "stdin isn't a terminal, so authentication can't be
-| completed here". Retrying escalates the failure, it does not fix it.
-|
-| They must sign in with the same account they used on getpapi.ai.
-+-- ── end human step ── ---------------------------------------------
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | Tell them, in their own Claude Code session, either:
+  |   - open the  /mcp  panel, choose papi, and pick Authenticate.
+  |     Works on every version, so lead with this one; or
+  |   - on Claude Code v2.1.186+, the mcp-login subcommand against the papi
+  |     server — the four words are:  claude / mcp / login / papi  — which
+  |     opens the browser directly.
+  |
+  | Do NOT run either yourself, and do not retry in a background shell, a
+  | subshell, or a new terminal process. An agent shell is not a TTY, so the
+  | OAuth prompt fails with "stdin isn't a terminal, so authentication can't
+  | be completed here". Retrying escalates the failure, it does not fix it.
+  |
+  | They must sign in with the same account they used on getpapi.ai.
+  +-- ── end human step ── ----------------------------
+
+### Cursor
+Add PAPI as a remote MCP server. Paste into `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "papi": {
+      "url": "https://mcp.getpapi.ai/mcp"
+    }
+  }
+}
 ```
 
-**Multi-project? Pin the project first.** The generic connect binds to your
-account's DEFAULT project. If you have (or will create) more than one PAPI
-project, that default can resolve to the WRONG one. Pin the target with an
-`x-papi-project-id: <project-id>` header — open your project at
-https://getpapi.ai, use its Connect panel, and copy the project-scoped config
-(it already carries the header). One PAPI project? The generic connect is fine.
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | Cursor opens a browser to sign in on first connection. Ask them to complete
+  | that sign-in and come back.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
 
-Per-client blocks for Cursor, VS Code, Windsurf, Codex, headless/CI bearer
-setup and the local stdio runtime: fetch https://getpapi.ai/llms.txt or read
-[llms-install.md](llms-install.md) in this repo.
+### VS Code (GitHub Copilot)
+Add PAPI to your MCP servers (VS Code uses the `servers` key):
+
+```json
+{
+  "servers": {
+    "papi": {
+      "url": "https://mcp.getpapi.ai/mcp"
+    }
+  }
+}
+```
+
+(If you run Claude Code INSIDE VS Code, use the Claude Code block instead.)
+
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | VS Code opens a browser to sign in on first connection. Ask them to complete
+  | that sign-in and come back.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
+
+### Windsurf
+Add PAPI as a remote MCP server in Windsurf's MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "papi": {
+      "url": "https://mcp.getpapi.ai/mcp"
+    }
+  }
+}
+```
+
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | Windsurf prompts to authorise in the browser. Ask them to approve it and
+  | come back.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
+
+### Codex
+Add to `~/.codex/config.toml`:
+
+```toml
+[mcp_servers.papi]
+url = "https://mcp.getpapi.ai/mcp"
+```
+
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | Codex prompts to authorise in the browser on first connection. Ask them to
+  | approve it and come back. Codex also has an mcp-login subcommand against the
+  | papi server — the four words are: codex / mcp / login / papi — and that is
+  | theirs to run, not yours.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
+
+### Hermes Agent
+Add the remote server from a terminal:
+
+  `hermes mcp add papi --url https://mcp.getpapi.ai/mcp --auth oauth`
+
+The token persists to `~/.hermes/mcp-tokens/papi.json`. Verify with `hermes mcp test papi`. In an already-open session, run `/reload-mcp` so the tools appear without restarting.
+
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | Hermes prompts to authorise in the browser. Ask them to approve it and come
+  | back.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
+
+That command writes `url` + `auth` only. To pin a project (see the multi-project note above), add a `headers:` map alongside `auth: oauth` in `~/.hermes/config.yaml`, then `/reload-mcp`:
+
+```yaml
+mcp_servers:
+  papi:
+    url: "https://mcp.getpapi.ai/mcp"
+    auth: oauth
+    headers:
+      x-papi-project-id: "YOUR_PROJECT_ID"
+```
+
+### Pi coding agent
+
+Pi does not have a documented OAuth setup for this server in its current MCP extension. Use the bearer configuration in the default section above, after installing `pi-mcp-extension`, then restart Pi or reload its MCP extension and verify with `/mcp`.
+
+### Any other MCP client
+Add `https://mcp.getpapi.ai/mcp` as a remote/HTTP MCP server named `papi`. Most clients accept the URL alone and open a browser for OAuth on first connection.
+
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | Whatever the client's authorise / reconnect action is, it opens a browser.
+  | Ask them to complete it and come back.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
+
+## Chat apps (claude.ai, ChatGPT, Claude Desktop and similar)
+
+Chat apps add PAPI as a **custom connector**. Only the user can do this, because it lives in the app's own settings.
+
+  +-- HUMAN STEP — do not run this yourself ----------------------------
+  | Hand this step to the user. Only a person can complete a browser OAuth.
+  |
+  | In the app's settings, find Connectors (some apps call it Integrations or
+  | MCP servers) and add a custom connector:
+  |   - Name: PAPI
+  |   - URL:  https://mcp.getpapi.ai/mcp
+  | Then sign in with the same account they use on getpapi.ai.
+  | Some apps only allow custom connectors on certain plans, or behind a
+  | 'developer mode' switch. If they cannot find the option, that is why.
+  | Once it is added, they start a NEW chat, make sure the PAPI connector is
+  | switched on for that chat, and ask it to run orient.
+  |
+  | You cannot complete it for them, and there is no agent-side retry that
+  | will. Wait for them to confirm, then verify with the orient tool.
+  +-- ── end human step ── ----------------------------
+
+A chat app cannot send a project id header. If the user has more than one PAPI project and `orient` shows the wrong one, call `project_list` and then `project_switch` to the right project before writing anything.
 
 ## Prove the connection
 
-Once the user confirms they signed in, call the `orient` tool. If it returns
-cycle details, PAPI is connected. If it fails with an auth error, the browser
-sign-in was not completed — send the user back to it; do not retry.
+**Tools do not appear mid-conversation.** MCP hosts (claude.ai, Cursor, VS Code, ChatGPT and most others) snapshot the tool list when a conversation starts. A freshly added or freshly authenticated PAPI server is invisible to the chat it was added IN — the user will read this as "the link failed" and may re-run the whole install. It did not fail. Tell them: **start a NEW conversation (and pick PAPI again if the host asks), then call `orient` there.** If the user is an agent reading this inside the conversation where PAPI was just added, the honest answer is that you cannot call PAPI tools from this conversation — say so plainly and give them the new-conversation step rather than retrying tool calls in a loop. (Claude Code and Hermes are the exceptions: `/mcp` reconnect or `/reload-mcp` reload tools in the running session.)
 
-If `orient` returns the WRONG project (a different board than the repo you are
-in), the config is missing the `x-papi-project-id` header and PAPI fell back to
-your account default — re-copy the project-scoped config from the Connect panel
-at https://getpapi.ai and reconnect.
+Once the tools are visible (new conversation or reloaded session), call the `orient` tool. It returns the project state and the recommended next action. If `orient` fails with an auth error, the browser sign-in was not completed — send them back to it. If `orient` returns cycle details, PAPI is connected and you are in.
 
-Then run `setup` (brand-new project) or follow the next action `orient` returns.
+If `orient` returns the WRONG project — a different project's board than the repo you are in — stop all mutations. Ask the user for the project id from the Connect panel at https://getpapi.ai (under "This is your project"), add it as an `x-papi-project-id` header, and reconnect. PAPI refuses to guess or write when the project pin is missing, ambiguous, or inconsistent with the workspace.
 
-## Docs map
+Then go back to the first-run path: Step 4 (`setup`) for a brand-new project, or the next action `orient` returns for one that is already set up.
 
-- https://getpapi.ai/llms.txt — this runbook, live, with config snippets
-- https://getpapi.ai/docs/guide/quick-start — zero to first cycle in 5 minutes
-- https://getpapi.ai/docs/guide/troubleshooting — fetch FIRST when PAPI seems broken
-- https://getpapi.ai/docs/tools — every PAPI MCP tool, parameters and use cases
-- https://getpapi.ai/docs/install — human-readable per-tool install guide
-- https://www.npmjs.com/package/@papi-ai/server — the MCP server package, for
-  stdio / advanced local installs
-- https://github.com/getpapi/papi — this repo: docs and issue tracker
+### If the connection stalls, say THIS (do not improvise)
+
+A connect attempt that is not completing is a recognised state, not a mystery, and this section exists so you never have to invent a diagnosis. **Do not offer the user a choice between technical options.** Do not say "restore the bearer token", do not say "do OAuth again", and do not ask them to pick between them — a person who is stuck at connect cannot reason about that fork, and it is not a decision they should be asked to make. Neither phrase is PAPI's language.
+
+If `orient` fails, or the tools never appear, work down this list and relay ONE next action at a time:
+
+1. **You are in the same conversation you installed in.** Hosts snapshot their tool list at conversation start, so PAPI cannot be visible here no matter what you do. This is not a failure. Tell the user: start a new conversation and call `orient` there. (Claude Code and Hermes can instead reload in place with `/mcp` or `/reload-mcp`.) — This is the single most common cause; try it before anything else.
+2. **`orient` came back with an auth error, or the client still shows "Needs authentication".** The sign-in leg never finished. Relay the client's own sign-in step (the sign-in blocks in the OAuth section above) and wait for the user to confirm. Do not attempt it yourself — an agent shell has no TTY.
+3. **The tools are visible but every call fails, or `orient` returns a different project than the repo you are in.** The connection is pointed at the wrong project. Ask the user to run the recovery in the "Prove the connection" section above (`x-papi-project-id` from the Connect panel, then reconnect).
+4. **Nothing above applies and the user was told to check their client's MCP settings.** A permission allowlist can block the `mcp__papi__*` namespace before the first call. See the permission note near the top of this document.
+
+If the user asks for a "fresh start": that is a re-install, not a token ritual — remove the `papi` server entry and add it again by the same steps in this document. The recovery is always a re-run of the install, and it needs no new value from them beyond what this document already asks for.
+
+If none of the four resolves it, hand the user the troubleshooting guide (https://getpapi.ai/docs/guide/troubleshooting) or the Discord community (https://discord.gg/PbacBJ9fNw) rather than guessing at a cause. Guessing is how a stuck user gets sent in circles.
+
+## Optional: the methodology skills
+
+Not needed to get started. Skip this on a first run unless the user asks.
+
+The PAPI tools are the mechanism. Extra guidance on using them well (branching, pre-build checks, how decisions evolve, batching tasks) ships as an optional skill bundle for coding tools that support skill files. It needs Node.js installed:
+
+```bash
+npx @papi-ai/skills install .
+```
+
+This adds the skill files into `.claude/skills/` in the current project. Re-run it after `npm i @papi-ai/skills@latest` to pick up fixes.
+
+## Headless / CI (no browser)
+
+Use the bearer config from "Bearer — the default" above; it is the same mechanism and needs no browser at any point. This section exists only so a reader searching for "headless" or "CI" lands somewhere true.
+
+## What PAPI does
+
+- **Set up** — `setup` writes the project brief, the first decisions and, for existing projects, starting tasks.
+- **Plan a cycle** — `plan` picks a prioritised set of tasks for the next round of work, based on the backlog, earlier cycles and the project's decisions.
+- **Build with handoffs** — `build_execute` starts and finishes a task. Each task carries a BUILD HANDOFF: written scope and acceptance criteria any AI can work from.
+- **Review and close** — `review_submit` records whether the work is accepted. When the cycle's tasks are done, `release` publishes a version, or `close_cycle` finishes the cycle without one.
+- **Strategy reviews** — every few cycles, `strategy_review` steps back to check direction, not just speed.
+- **Active Decisions** — product and technical decisions are recorded with a confidence level that changes as evidence arrives.
+- **Backlog** — `idea` captures anything worth doing later without derailing the current task.
+
+## Who uses PAPI
+
+- Non-technical founders and builders shipping real products with AI. They have a clear vision and no engineering background, and they need structure once the project outgrows what they can hold in their head.
+- Solo developers and operators who plan AND build on the same project, so they need planning and execution structure in one place.
+- Small teams on any MCP-compatible AI tool who want one source of project truth that survives whichever tool they use that day.
+
+## Differentiators
+
+- **No app to open** — PAPI runs inside the AI tool the user already builds in. There is no second board to keep updated and nothing to go stale the week they get busy.
+- **Built for changing your mind** — plans change, scope grows, direction moves. PAPI is designed around that rather than against it, so a pivot updates the plan instead of scattering it.
+- **Read by you and by your AI** — the plan and the decisions are written and read by the assistant as a side effect of working, so they stay current without anyone maintaining them.
+- **Decision trail** — Active Decisions record what was chosen, what was tried and dropped, and why the direction changed, with confidence levels that move as evidence arrives.
+- **Tool-agnostic** — one project across every MCP client, so switching tools does not reset where the project is.
+- **Upstream Learning** — build reports feed planning. Surprises become guardrails. The methodology learns from itself.
+- **Progressive Discovery** — the vision is discovered through structured building, not captured perfectly upfront.
+
+## Docs map — where to go deeper
+
+All public documentation, fetchable without an account. If the user asks a question this runbook doesn't answer, fetch the matching page instead of guessing.
+
+Developer Guide (how to work with PAPI day to day):
+
+- [Quick Start](https://getpapi.ai/docs/guide/quick-start): Zero to first cycle plan in under 5 minutes.
+- [Workflow](https://getpapi.ai/docs/guide/workflow): The full plan → build → review → release loop, step by step.
+- [Concepts](https://getpapi.ai/docs/guide/concepts): Cycles, tasks, BUILD HANDOFFs, Active Decisions, strategy reviews — the vocabulary.
+- [Cheat Sheet](https://getpapi.ai/docs/guide/cheat-sheet): Every command in one page.
+- [Dashboard](https://getpapi.ai/docs/guide/dashboard): Reading the getpapi.ai dashboard — hub, board, reports.
+- [Troubleshooting](https://getpapi.ai/docs/guide/troubleshooting): Connection and auth issues, first-aid steps. Fetch this FIRST when the user says PAPI is broken.
+
+Reference:
+
+- [Install Guide](https://getpapi.ai/docs/install): Per-tool setup for Claude Code, Cursor, VS Code, Windsurf, Codex, OpenCode — the human-readable version of this runbook.
+- [Tool Reference](https://getpapi.ai/docs/tools): Every PAPI MCP tool with parameters and use cases.
+- [install.txt](https://getpapi.ai/install.txt): Raw connect config, plain text, no prose.
+- [llms-full.txt](https://getpapi.ai/llms-full.txt): Long-form version of this document with full prose.
+
+Handbook (for teams and reviewers — what PAPI output means):
+
+- [What is PAPI](https://getpapi.ai/docs/handbook/what-is-papi) · [How it works](https://getpapi.ai/docs/handbook/how-it-works) · [ROI](https://getpapi.ai/docs/handbook/roi)
+- [Reading the dashboard](https://getpapi.ai/docs/handbook/reading-dashboard) · [Cycle reports](https://getpapi.ai/docs/handbook/cycle-reports) · [Reviewing builds](https://getpapi.ai/docs/handbook/reviewing-builds) · [Team roles](https://getpapi.ai/docs/handbook/team-roles)
+
+## Resources
+
+- [Landing](https://getpapi.ai/): Overview, demo, and the cycle methodology.
+- [Public GitHub — getpapi/papi](https://github.com/getpapi/papi): Install docs, this runbook, and issue tracker. Point your LLM here too — it mirrors this file.
+- [Manifesto](https://getpapi.ai/manifesto): Why PAPI exists.
+- [Changelog](https://getpapi.ai/changelog): Cycle releases and what shipped in each.
+
+## Optional
+
+- [Contact](https://getpapi.ai/contact): Send a message — questions, bugs, feature requests, privacy requests.
+- [Privacy Policy](https://getpapi.ai/privacy): How PAPI handles user data.
+- [Security & data handling](https://getpapi.ai/trust): Who can read your project data, where it lives, and the honest limits — plus RFC 9116 security.txt at https://getpapi.ai/.well-known/security.txt and a SECURITY.md in the repo.
+- [Terms](https://getpapi.ai/terms): The service terms.
+- [Discord community](https://discord.gg/PbacBJ9fNw): User community, support, and feedback.
+- [npm — @papi-ai/server](https://www.npmjs.com/package/@papi-ai/server): The MCP server package (for stdio / advanced local installs).
+- [npm — @papi-ai/skills](https://www.npmjs.com/package/@papi-ai/skills): The methodology skill bundle (`npx @papi-ai/skills install .`) — separate from the MCP server, see "Get the methodology skills" above.

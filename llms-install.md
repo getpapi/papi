@@ -13,6 +13,13 @@ PAPI (Persistent Adaptive Project Intelligence) is a **remote MCP server** that 
 
 There is no database to set up and nothing to run locally. PAPI is hosted.
 
+Before your first PAPI call, check your AI client's MCP permission settings. If
+the client uses an allowlist, permit the `mcp__papi__*` namespace before running
+`setup` or filing a bug. In Claude Code, add `mcp__papi__*` to
+`permissions.allow` in `.claude/settings.json`, or approve the first prompt
+with "don't ask again". Other clients may expose the same control under a
+different name.
+
 ## Rules (read before editing anything)
 
 1. Configure **only the client you are currently running inside** — not every client on the machine.
@@ -236,7 +243,7 @@ pi install npm:pi-mcp-extension
 }
 ```
 
-The current Pi extension documentation confirms this `mcpServers` + Streamable HTTP shape but does not document OAuth for this configuration. Replace both placeholders with the values from the Connect panel, keep the file out of version control, and check the connection with `/mcp`.
+The current Pi extension documentation confirms this `mcpServers` + Streamable HTTP shape but does not document OAuth for this configuration. Use the bearer headers, keep the real token out of version control, and check the connection with `/mcp`.
 
 ### Any other Streamable HTTP MCP client
 Configure a remote server named `papi` at `https://mcp.getpapi.ai/mcp`. Prefer the two bearer headers above. If the client only does OAuth, add it without headers and have the user complete the client's browser auth flow.
