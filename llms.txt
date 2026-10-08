@@ -501,6 +501,25 @@ Handbook (for teams and reviewers — what PAPI output means):
 - [What is PAPI](https://getpapi.ai/docs/handbook/what-is-papi) · [How it works](https://getpapi.ai/docs/handbook/how-it-works) · [ROI](https://getpapi.ai/docs/handbook/roi)
 - [Reading the dashboard](https://getpapi.ai/docs/handbook/reading-dashboard) · [Cycle reports](https://getpapi.ai/docs/handbook/cycle-reports) · [Reviewing builds](https://getpapi.ai/docs/handbook/reviewing-builds) · [Team roles](https://getpapi.ai/docs/handbook/team-roles)
 
+## Blog
+
+Guides for people building real projects with AI coding tools, and notes from running PAPI on its own development. Index: https://getpapi.ai/blog
+
+- [Lovable Limitations: What Happens After the Prototype](https://getpapi.ai/blog/switching-from-lovable-to-papi): Lovable is great at zero to one. This is what happens after one: the wall prompt-built projects hit, and how to move to a coding assistant and keep your plan.
+- [Why Your AI Forgets Your Project](https://getpapi.ai/blog/why-your-ai-forgets-your-project): Cursor, Claude Code, Codex and Lovable all start a new session cold. Why it happens, where longer chats and rules files stop, and what a session really needs.
+- [Plan, Build, Review: The Loop That Compounds](https://getpapi.ai/blog/plan-build-review-the-loop-that-compounds): One cycle on an example project, start to finish: what the plan holds, a build handoff in full, the build report, a review verdict, and what the next plan does.
+- [The Cycle We Shipped No New Features](https://getpapi.ai/blog/the-cycle-we-shipped-no-new-features): We spent a whole cycle on reliability, not features: making sure a task marked done is really done. Why trustworthy project state is the floor under everything.
+- [Switching from Cursor to Claude Code Without Starting Over](https://getpapi.ai/blog/switching-ai-coding-tools-without-starting-over): Moving from Cursor to Claude Code, or any tool to any other, loses everything that lived in the chat. Why that hurts, and how to switch without starting over.
+- [Architecture Decision Records Do Not Survive AI Speed](https://getpapi.ai/blog/architecture-decisions-dont-survive-ai-speed): Code records what got built, never why. Architecture decision records were the right instinct, but they rot. What a decision looks like when it stays alive.
+- [Loop Engineering: Why AI Workflows Spin Instead of Compound](https://getpapi.ai/blog/loop-engineering-why-ai-workflows-spin): Most AI coding workflows have the shape of a loop and behave like a circle. Loop engineering for builders: the step everyone skips, and the second loop.
+- [Claude Code for Non-Developers: What to Set Up First](https://getpapi.ai/blog/claude-code-for-non-developers): The beginner guides get Claude Code running in an afternoon. What to set up before your first real project so it still makes sense in week four.
+- [Lovable to Cursor: Move the Plan, Not Just the Code](https://getpapi.ai/blog/lovable-to-cursor): Moving a Lovable app into Cursor or Claude Code takes an afternoon. The steps that move the code, and the part of your project that does not come with it.
+- [Why AI Keeps Breaking Your App, and What Stops It](https://getpapi.ai/blog/ai-keeps-breaking-my-app): Every feature your AI adds breaks something that worked yesterday. Why it happens, why checkpoints and warnings fall short, and the two steps that help.
+- [Claude Code Loses Context: Keep the Plan Outside the Chat](https://getpapi.ai/blog/claude-code-loses-context): Compaction summarises your Claude Code session and the reasons behind your decisions go with it. What survives, what does not, and where to keep the plan.
+- [Project Management for AI Coding: Why Your Board Goes Stale](https://getpapi.ai/blog/project-management-for-ai-coding): Your AI finishes tasks faster than you can update the board, so by Friday the board is wrong. How to manage an AI coding project so the plan stays true.
+- [PRD for AI Coding: Write the First Cycle, Not the Whole Book](https://getpapi.ai/blog/prd-for-ai-coding): You wrote a long PRD, pasted it into your AI tool, and by week three the app had moved on. What a PRD for AI coding needs, and how to let it change.
+- [Claude Code Task Management: A List Is Not a Plan](https://getpapi.ai/blog/claude-code-task-management): Claude Code tasks now survive a restart, which fixes forgetting. It does not fix drift. What a task list covers, and the layer a project still needs on top.
+
 ## Resources
 
 - [Landing](https://getpapi.ai/): Overview, demo, and the cycle methodology.
