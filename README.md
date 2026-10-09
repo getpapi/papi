@@ -5,6 +5,7 @@
 [![npm @papi-ai/server](https://img.shields.io/npm/v/%40papi-ai%2Fserver?label=%40papi-ai%2Fserver&color=5a4b8a)](https://www.npmjs.com/package/@papi-ai/server)
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.getpapi%2Fpapi-5a4b8a)](https://registry.modelcontextprotocol.io/?search=io.github.getpapi%2Fpapi)
 [![Smithery](https://img.shields.io/badge/Smithery-listed-5a4b8a)](https://smithery.ai/servers/cathal/getpapi)
+[![AllMCPs](https://allmcps.com/api/badge/papi-persistent-adaptive-planning-intelligence?style=shield)](https://allmcps.com/mcp/papi-persistent-adaptive-planning-intelligence)
 [![Cycles shipped](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgetpapi.ai%2Fapi%2Fstats&query=%24.totalCycles&label=cycles%20shipped&color=5a4b8a&cacheSeconds=3600)](https://getpapi.ai/changelog)
 [![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
 [![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
