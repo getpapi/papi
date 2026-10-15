@@ -1,8 +1,10 @@
 # PAPI
 
-> Your AI builds. PAPI steers.
+> Vibe code as a team.
 
-PAPI is a project manager that lives inside the AI tool you already use. It keeps the plan, the decisions and the progress of a project in one place, so every new session picks up where the last one stopped and you stay in control of where the project goes. You do not need to be a developer to use it.
+PAPI keeps a shared plan, handoffs, decisions, conventions and review history for a project, so people and their AI tools can continue from the same agreed context. You do not need to be a developer to use it.
+
+A handoff records what to build and how it will be checked. Decisions and conventions preserve the agreed constraints; build reports and human review preserve the outcome. Your AI client reads these records to continue the work. Task claims and sessions help coordinate builders. A Git poller is enough if all you need is change notifications; PAPI adds the agreed project context and review workflow. PAPI does not run AI reasoning or write your application on its servers.
 
 PAPI is one hosted connection (an MCP server at https://mcp.getpapi.ai/mcp) plus a dashboard at https://getpapi.ai. It works with Claude Code, Cursor, VS Code, Windsurf, Codex, claude.ai, ChatGPT, Claude Desktop, or any other AI tool that can add an MCP server.
 
@@ -445,6 +447,8 @@ npx @papi-ai/skills install .
 ```
 
 This adds the skill files into `.claude/skills/` in the current project. Re-run it after `npm i @papi-ai/skills@latest` to pick up fixes.
+
+For the full method — the traditional workflow, scope discipline, and a debugging playbook — point the user (and yourself) at the "How to use PAPI" guide at https://getpapi.ai/docs/guide/how-to-use-papi, and follow it rather than working ad hoc.
 
 ## Headless / CI (no browser)
 
