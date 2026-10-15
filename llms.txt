@@ -83,7 +83,7 @@ Tell the user: "Now I build the first task. PAPI tracks it from start to finish,
 2. `build_execute` with the task id starts it and gives you its build handoff.
 3. Do the work the handoff describes. In a coding tool, run it from the project folder confirmed in Step 1.
 4. `build_execute` again to finish it, with a short report of what was built and anything that surprised you.
-5. Show the user what changed and ask them to check it. Record their verdict with `review_submit`.
+5. Show the user what changed and ask them to check it. Record their verdict with `review_submit`. A task in In Review needs `review_task`, then `review_submit` once it has been reviewed, then `release`.
 6. Carry on with the next task. When every task in the cycle is done and reviewed, `orient` tells you how to close the cycle. Then run `plan` again for the next one.
 
 ### Every session after this
