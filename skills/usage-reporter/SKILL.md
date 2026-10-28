@@ -14,7 +14,8 @@ It is optional. If it cannot run, complete the build normally: tokens are record
 | Client | Source | Status |
 |---|---|---|
 | Claude Code | `~/.claude/projects/<project path with dashes>/*.jsonl` | Verified. Every assistant message carries input, output, cache read and cache creation tokens, a timestamp and the model. |
-| Codex, OpenCode | not verified | No equivalent transcript was available to check. A follow-up task exists for each client that is confirmed to write usage. Until then these report Not recorded. |
+| OpenCode | `~/.local/share/opencode/opencode.db`, table `message` | Verified (task-4842). Each assistant row has input, output, reasoning, cache read and cache write tokens, a millisecond timestamp and the model id. Run `node .claude/skills/usage-reporter/scripts/opencode-usage-report.mjs --from <iso> --to <iso>`. It covers every OpenCode session on the machine, not only this project. Needs Node 22+ (`node:sqlite`). |
+| Codex | not verified | Codex was not installed on the machine checked, so no real transcript was available. No reader is shipped for it; it reports Not recorded until one is confirmed. |
 
 ## How to use it
 

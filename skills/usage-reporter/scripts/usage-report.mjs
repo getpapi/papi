@@ -78,12 +78,12 @@ export function sumWindow(records, fromMs, toMs) {
  * assigned in order so a message is never counted twice; whatever falls in no stage is `unassigned`,
  * which makes stages + unassigned equal the window total exactly.
  */
-export function buildReport(records, fromIso, toIso, stages = {}) {
+export function buildReport(records, fromIso, toIso, stages = {}, source = 'claude-code-transcript') {
   const fromMs = Date.parse(fromIso);
   const toMs = Date.parse(toIso);
-  if (!Number.isFinite(fromMs) || !Number.isFinite(toMs) || toMs < fromMs) return notRecorded('invalid window');
+  if (!Number.isFinite(fromMs) || !Number.isFinite(toMs) || toMs < fromMs) return notRecorded('invalid window', source);
   const win = sumWindow(records, fromMs, toMs);
-  if (win.totals.messages === 0) return notRecorded('no usage records in the window');
+  if (win.totals.messages === 0) return notRecorded('no usage records in the window', source);
   const claimed = new Set();
   const perStage = {};
   for (const [name, range] of Object.entries(stages)) {
@@ -107,7 +107,7 @@ export function buildReport(records, fromIso, toIso, stages = {}) {
   const t = win.totals;
   return {
     notRecorded: false,
-    source: 'claude-code-transcript',
+    source,
     window: { from: fromIso, to: toIso },
     totals: t,
     model: win.model,
@@ -121,8 +121,8 @@ export function buildReport(records, fromIso, toIso, stages = {}) {
   };
 }
 
-export function notRecorded(reason) {
-  return { notRecorded: true, reason, source: 'claude-code-transcript' };
+export function notRecorded(reason, source = 'claude-code-transcript') {
+  return { notRecorded: true, reason, source };
 }
 
 function readAll(dirOrFile, fromMs) {
