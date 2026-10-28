@@ -79,14 +79,14 @@ Pick a task, build it against its handoff, and record what happened.
 
 ## Review
 
-Get the review brief, then record the human verdict.
+Get the review brief, then record the verdict.
 
 | Tool | What it does |
 |---|---|
 | `review_list` | List tasks ready for your sign-off — shows completed builds waiting for approval or feedback. |
 | `review_task` | Get the review brief for a task: call once a task is In Review, before review_submit. |
 | `review_claim` | Claim a Pending Review from the shared cross-user review queue so you are the one reviewing it. |
-| `review_submit` | Record the human verdict on a completed build: accept, request changes, or reject. |
+| `review_submit` | Record the verdict on a completed build: accept, request changes, or reject. |
 | `learning_action` | Mark a cycle learning as actioned (linking it to a task or idea) or list unactioned learnings. |
 | `discovered_issue_resolve` | Mark a discovered_issue (cycle_learnings row, category="issue") as resolved. |
 | `bug` | Report a bug in PAPI, or submit an idea. |

@@ -21,10 +21,10 @@ orient → plan → build → review → release → (next plan)
   bugs found outside the scope.
 - **review** has two steps. `review_task` returns the review brief: the
   acceptance criteria, the decisions and conventions that bind the module, and
-  what the build report claims. Your assistant then checks the change and asks
-  you for a verdict. `review_submit` records it. Accept moves the task to Done,
-  request changes sends it back for rework, and reject discards the build.
-  The verdict is always a human's.
+  what the build report claims. The reviewer checks the change against it and
+  gives a verdict, and `review_submit` records it. Accept moves the task to
+  Done, request changes sends it back for rework, and reject discards the
+  build. The reviewer can be your assistant or a person.
 - **release** cuts a versioned release: a git tag, a CHANGELOG entry, and a
   push. `close_cycle` finishes a cycle without a version. Either way, the next
   plan starts from what the cycle learned.
@@ -93,5 +93,5 @@ evidence rather than instinct.
   the decisions and the loop.
 - **Not a ticket system you maintain by hand.** The board is written and read
   by the tools as a side effect of working.
-- **Not unattended at the verdict.** Plans and reviews are shaped by you.
-  `review_submit` needs a human verdict, and nothing is accepted on your behalf.
+- **Not a black box.** Every verdict, decision and handoff is recorded, so you can
+  see what was accepted and why, whoever or whatever reviewed it.

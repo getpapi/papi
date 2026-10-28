@@ -115,7 +115,7 @@ PAPI exposes 79 MCP tools to your assistant. The core loop is seven of them:
 - **plan**: turn the backlog into a cycle, with a build handoff for every task.
 - **build_execute**: start a task (branch, handoff, In Progress), then complete it with a build report.
 - **review_task**: the review brief for a task that is In Review. Read it before you decide.
-- **review_submit**: record the verdict, accept, request changes or reject. The verdict is always yours.
+- **review_submit**: record the verdict: accept, request changes or reject. Your assistant or a teammate can run it.
 - **release**: a versioned release with a tag and a changelog entry. **close_cycle** finishes a cycle without a version.
 
 The rest covers sessions, teams, decisions, conventions, documents, bugs and strategy. [The full list](docs/tools.md) groups all 79 by job.
