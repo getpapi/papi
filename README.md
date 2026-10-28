@@ -4,8 +4,6 @@
 
 [![npm @papi-ai/server](https://img.shields.io/npm/v/%40papi-ai%2Fserver?label=%40papi-ai%2Fserver&color=5a4b8a)](https://www.npmjs.com/package/@papi-ai/server)
 [![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.getpapi%2Fpapi-5a4b8a)](https://registry.modelcontextprotocol.io/?search=io.github.getpapi%2Fpapi)
-[![Smithery](https://img.shields.io/badge/Smithery-listed-5a4b8a)](https://smithery.ai/servers/cathal/getpapi)
-[![AllMCPs](https://allmcps.com/api/badge/papi-persistent-adaptive-planning-intelligence?style=shield)](https://allmcps.com/mcp/papi-persistent-adaptive-planning-intelligence)
 [![Cycles shipped](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgetpapi.ai%2Fapi%2Fstats&query=%24.totalCycles&label=cycles%20shipped&color=5a4b8a&cacheSeconds=3600)](https://getpapi.ai/changelog)
 [![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
 [![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
@@ -14,11 +12,13 @@
 
 Your AI starts every session from zero. Your project stays on course.
 
-![A cycle running in PAPI: the hub, the board, the decision log, and the project's history](assets/tour.gif)
+![A cycle running in PAPI: the hub, the board, the decision log, and the reviews](assets/tour.gif)
 
 AI coding tools are great at writing code and terrible at holding a direction. Scope grows, plans change, and the decisions behind them get made in a chat window and lost there. PAPI keeps the project on course. It gives your assistant structured plan, build, review and release cycles, plus a decision trail recording what was chosen, what was dropped, and why. Your assistant writes and reads it while it works, so it stays current without anyone maintaining it.
 
 You connect it once. From then on, your assistant starts every session knowing which cycle you're on, what's in flight, and what to do next.
+
+If PAPI is useful, [star the repo](https://github.com/getpapi/papi). It's how other people building with AI assistants find it.
 
 **Free to start.** The whole plan → build → review → release loop, on up to three projects, no card. Free runs a real project start to finish; it isn't a trial. [Pricing](https://getpapi.ai/pricing).
 
@@ -102,9 +102,9 @@ Taskmaster is a good way to break work into tasks inside a repo. PAPI adds state
 
 *Active Decisions are the part a task tracker has no field for: what was decided, why, what was rejected, and when to revisit it. Confidence moves as evidence arrives.*
 
-![The project's history in PAPI: cycles, tasks shipped, decision events and strategy reviews on one timeline](assets/time-machine.png)
+![Reviews in PAPI: what shipped, where the project stands, and the direction for the next cycles](assets/reviews.png)
 
-*Every cycle leaves a trail, so the reasoning behind the project is still there months later — including for the assistant reading it back.*
+*Every review leaves a trail, so the reasoning behind the project is still there months later, including for the assistant reading it back.*
 
 ## Tools
 
@@ -172,10 +172,6 @@ Stuck, or something's broken? Open an issue — there are templates for each cas
 - [Discord](https://discord.gg/PbacBJ9fNw) is faster for questions, and release notes land there first.
 - [CONTRIBUTING.md](CONTRIBUTING.md) covers what a useful report looks like and what a docs PR can change.
 - Found a vulnerability? Don't open an issue — [SECURITY.md](SECURITY.md) has the private channel.
-
-### Star the repo
-
-If PAPI is useful to you, [star it](https://github.com/getpapi/papi). That's the whole ask, and it's how other people building with AI assistants find it.
 
 ## Links
 
