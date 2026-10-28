@@ -523,6 +523,7 @@ Guides for people building real projects with AI coding tools, and notes from ru
 - [Project Management for AI Coding: Why Your Board Goes Stale](https://getpapi.ai/blog/project-management-for-ai-coding): Your AI finishes tasks faster than you can update the board, so by Friday the board is wrong. How to manage an AI coding project so the plan stays true.
 - [PRD for AI Coding: Write the First Cycle, Not the Whole Book](https://getpapi.ai/blog/prd-for-ai-coding): You wrote a long PRD, pasted it into your AI tool, and by week three the app had moved on. What a PRD for AI coding needs, and how to let it change.
 - [Claude Code Task Management: A List Is Not a Plan](https://getpapi.ai/blog/claude-code-task-management): Claude Code tasks now survive a restart, which fixes forgetting. It does not fix drift. What a task list covers, and the layer a project still needs on top.
+- [Project Drift: What It Is and the Signs You Have It](https://getpapi.ai/blog/project-drift): Project drift is the slow gap between the app you meant to build and the one you have. How it builds up session by session, and four signs to check for.
 
 ## Resources
 

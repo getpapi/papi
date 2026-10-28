@@ -11,8 +11,8 @@ rather than pasting the usual open-source welcome mat.
 
 ## What actually helps
 
-**A good connection report helps most.** Connecting an MCP server and getting
-through browser OAuth is the step where people fall off, and it fails
+**A good connection report helps most.** Connecting an MCP server, with a
+connection token or browser sign-in, is the step where people fall off, and it fails
 differently in every client. We can only fix the failures we can see. If PAPI
 would not connect for you, the
 [Connection problem](https://github.com/getpapi/papi/issues/new?template=1-connection-problem.yml)

@@ -43,8 +43,9 @@ Claude Code; there is nothing to copy or edit, and it works from any directory:
 ```
 
 The plugin carries the server config, so PAPI is registered the moment it
-installs. It also brings two skills: `check-mcp`, which diagnoses a connection
-that isn't working, and `papi-verify`, which health-checks the current cycle.
+installs. It also brings the PAPI skills for each phase of the cycle, including
+`check-mcp`, which diagnoses a connection that isn't working, and `papi-verify`,
+which health-checks the current cycle.
 
 Prefer the terminal, or not on Claude Code's plugin system? Add the endpoint
 directly instead — same server, same account:

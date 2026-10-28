@@ -4,6 +4,8 @@ Connect [DeepSeek Harness](https://github.com/deepseek-ai/deepseek-harness) to [
 
 This is a declarative bundle. It contains no executable PAPI code and no credentials.
 
+> Not yet published to npm. The install commands below will not resolve until `@papi-ai/deepseek-harness` is published.
+
 ## Install
 
 Create a PAPI connection token, expose it only to the process launching DeepSeek Harness, and install the bundle into the profile you use:

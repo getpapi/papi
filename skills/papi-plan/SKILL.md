@@ -124,7 +124,7 @@ setup → plan
 
 ### Board Management
 
-- **board_view** — Read-only view of all tasks on the board.
+- **board_view** — Read-only board view. Bare, it returns a compact table (id, title, status, priority, cycle, readiness; 20 rows with an offset hint). Filter with `query`, `cycle` or `status`; `task_id` gives one task in full; `fields=all` gives every column.
 - **board_archive** — Removes completed/cancelled tasks from the board to an archive.
 - **board_deprioritise** — Defers work or records a typed blocker using action, reason, blocker_type and blocker_ref. Use board_edit dependsOn for prerequisites without changing status. Follow the generated AGENTS.md Follow-up protocol at planning, review and release.
 
