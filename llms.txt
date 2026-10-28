@@ -221,7 +221,11 @@ Find the user's tool. Give them THAT block's step, then hand back the browser si
 **Multi-project? Pin the project first.** The per-client blocks below connect over OAuth. If you have (or will create) more than one PAPI project, do not rely on an account default: mutation calls fail closed until the target is uniquely identified. Pin it with an `x-papi-project-id: <project-id>` header: open your project in the dashboard at https://getpapi.ai and read the project id off its Connect panel, under "This is your project", where it is displayed as a labelled value with a Copy button.
 
 ### Claude Code
-Shortest path — the plugin. Two lines, inside Claude Code:
+Shortest path — the plugin. On Claude Code 2.1.292 or later, one command in a terminal:
+
+  `claude plugin install papi@papi --marketplace getpapi/papi`
+
+On an older version, two lines inside Claude Code:
 
   `/plugin marketplace add getpapi/papi`
   `/plugin install papi@papi`
