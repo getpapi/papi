@@ -10,7 +10,9 @@
 [![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
 [![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
 
-**Your AI starts every session from zero. Your project stays on course.**
+**Vibe code as a team.**
+
+Your AI starts every session from zero. Your project stays on course.
 
 ![A cycle running in PAPI: the hub, the board, the decision log, and the project's history](assets/tour.gif)
 
@@ -20,7 +22,7 @@ You connect it once. From then on, your assistant starts every session knowing w
 
 **Free to start.** The whole plan → build → review → release loop, on up to three projects, no card. Free runs a real project start to finish; it isn't a trial. [Pricing](https://getpapi.ai/pricing).
 
-> **What this repo is.** Documentation, install guides, and the issue tracker. PAPI's engine is closed source and hosted — you connect to it, you don't build it from here. The [`@papi-ai/server`](https://www.npmjs.com/package/@papi-ai/server) package on npm is the supported local runtime. The contents of this repo are MIT.
+> **What this repo is.** Documentation, install guides, plugin and extension manifests, the PAPI agent skills, and the issue tracker. PAPI's engine is closed source and hosted — you connect to it, you don't build it from here. The [`@papi-ai/server`](https://www.npmjs.com/package/@papi-ai/server) package on npm is the supported local runtime. The contents of this repo are MIT.
 
 ## Quick start
 
@@ -46,7 +48,7 @@ In Claude Code, the shortest path is the plugin — two lines, nothing to copy o
 /plugin install papi@papi
 ```
 
-The plugin carries the server config, plus two skills: `check-mcp` diagnoses a connection that isn't working, and `papi-verify` health-checks the current cycle.
+The plugin carries the server config and the PAPI skills for each phase of the cycle: planning, building, reviewing and releasing. It also includes `check-mcp`, which diagnoses a connection that isn't working, and `papi-verify`, which health-checks the current cycle.
 
 Every tool also takes the same streamable-HTTP endpoint directly, `https://mcp.getpapi.ai/mcp`. In Claude Code that's:
 
@@ -60,7 +62,7 @@ Either way, finish with `/mcp` → **papi** → **Authenticate**. Or skip the br
 claude mcp add --transport http papi https://mcp.getpapi.ai/mcp --header "Authorization: Bearer YOUR_CONNECTION_TOKEN" --header "x-papi-project-id: YOUR_PROJECT_ID"
 ```
 
-DeepSeek Harness users can install the repository-owned bundle after creating a PAPI connection token:
+The DeepSeek Harness bundle is in this repo but is not yet published to npm, so the command below won't resolve until it is. After creating a PAPI connection token, it will install with:
 
 ```text
 dsh plugin --profile web add @papi-ai/deepseek-harness
@@ -78,7 +80,7 @@ Per-tool config for Cursor, VS Code, Windsurf, Codex, and any generic MCP client
 - **strategy reviews** every few cycles step back and check direction, not just velocity.
 - **A dashboard** at [getpapi.ai](https://getpapi.ai) shows your cycles, board, and decisions, so you can see the state of the project without asking.
 
-The methodology is the product: a plan, build, review, release loop your assistant runs with you, with memory that compounds. PAPI has been built with PAPI for every cycle in the badge above.
+The methodology is the product: a plan, build, review, release loop your assistant runs with you, where each cycle's learnings feed the next plan. PAPI has been built with PAPI for every cycle in the badge above.
 
 ![The PAPI hub: what needs your attention, where the current cycle stands, and the next move](assets/hub.png)
 
@@ -88,13 +90,13 @@ The methodology is the product: a plan, build, review, release loop your assista
 
 *The board is the full picture. Your assistant writes to it as a side effect of working, so it is current without anyone maintaining it.*
 
-## How this differs from a tracker
+## How PAPI differs from a tracker
 
-**Unlike Linear, Jira, Asana or Notion,** this was not built for humans and then opened to agents. Those boards assume a human writes the ticket and a human reads it, in a tab your AI can't see. PAPI's board is written and read by your assistant as a side effect of working: starting a build opens the task, finishing it files the report, releasing closes the cycle. You approve the plan and you sign off the review. The ticket admin in between is the part that disappears. You manage the outcome, not the keystrokes.
+Linear, Jira, Asana and Notion are built for people to write tickets and other people to read them. They suit that job well, and plenty of teams keep using them.
 
-**Unlike Taskmaster** and other in-repo task files, PAPI's state isn't a file one tool generates once and then drifts from. It's hosted and structured — cycles, build reports, review verdicts, and Active Decisions carrying confidence levels that change as evidence arrives. The same project memory is there from Claude Code, Cursor, VS Code, or Codex, so switching tools doesn't reset your context, and last cycle's learnings are an input to the next plan rather than something you have to remember to mention.
+PAPI's board is written and read by your assistant as it works. Starting a build opens the task, finishing it files the report, and releasing closes the cycle. You approve the plan and sign off the review.
 
-Neither of those is a knock on the tools. They're solving a different problem to the one that breaks every time your assistant opens a fresh window.
+Taskmaster is a good way to break work into tasks inside a repo. PAPI adds state that lives outside the repo and persists across tools: cycles, build reports, review verdicts, and Active Decisions whose confidence changes as evidence arrives. The same project is available from Claude Code, Cursor, VS Code, Codex and the others, so switching tools doesn't reset it. Moving from Taskmaster? See [PAPI vs Taskmaster](https://getpapi.ai/alternatives/taskmaster).
 
 ![Active Decisions in PAPI: each decision with its confidence level and the cycles it has survived](assets/decisions.png)
 
@@ -106,7 +108,7 @@ Neither of those is a knock on the tools. They're solving a different problem to
 
 ## Tools
 
-PAPI exposes these MCP tools to your assistant. The whole loop is a handful of calls.
+PAPI exposes these MCP tools to your assistant. The whole loop is a handful of calls. The server exposes more than these, including claims and sessions for teammates, conventions, document registration and project export. The [Tool Reference](https://getpapi.ai/docs/tools) lists all of them.
 
 **Core loop**
 - **orient** — one call returns the current cycle, what's in flight, and the recommended next action. Run it at the start of every session.

@@ -111,7 +111,7 @@ Most tool errors are habit issues, not capability issues. Avoid them up front:
 - **Search-before-read for unverified paths.** If a path comes from memory or inference rather than a file you've read this session, run `Glob` or list the parent directory first. Don't `Read` paths you haven't confirmed exist.
 - **Use available native file/search tools.** Discover paths first and use
   bounded reads; do not assume another host's Read/Glob/Bash names exist.
-- **Verify-before-recommend.** Before suggesting a new task, hook, or skill, check whether it already exists: `board_view` for tasks, `doc_search` for docs, `ls .claude/hooks/` for hooks. Recommending duplicates of already-shipped work wastes a build slot.
+- **Verify-before-recommend.** Before suggesting a new task, hook, or skill, check whether it already exists: `board_view query="<text>"` for tasks, `doc_search` for docs, `ls .claude/hooks/` for hooks. Recommending duplicates of already-shipped work wastes a build slot.
 
 ## Review and completion evidence
 
