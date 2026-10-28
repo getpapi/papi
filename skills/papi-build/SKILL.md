@@ -60,7 +60,7 @@ This is a one-time check at the start of the cycle, not per-task. It catches sco
 
 The hosted server cannot see your machine, so send these with the completing `build_execute` call (the start response lists them with your build window already filled in). Each one the dashboard otherwise shows as **Not recorded**:
 
-- `model` (your exact model id) and `agent` (your client's name, used only if the server cannot tell).
+- `model` (your exact model id) and `agent` (your client's name). Both are required on every completion. If the runtime does not expose the exact model, send `model_evidence: []` to record an explicit unknown. Never guess a model, and never infer one from the client name or a configured default.
 - Tokens: run the `usage-reporter` skill's script once, just before completing, for the window from the build start to now, and pass `input_tokens`, `output_tokens` and `cache_read_tokens` from its `buildExecute` field. If the skill is unavailable or prints `notRecorded`, pass nothing. Never estimate tokens.
 - `commit_sha`, `files_changed`, `acceptance_results` (one entry per criterion with `met` and `evidence`) and `handoff_accuracy`.
 
