@@ -108,37 +108,17 @@ Taskmaster is a good way to break work into tasks inside a repo. PAPI adds state
 
 ## Tools
 
-PAPI exposes these MCP tools to your assistant. The whole loop is a handful of calls. The server exposes more than these, including claims and sessions for teammates, conventions, document registration and project export. The [Tool Reference](https://getpapi.ai/docs/tools) lists all of them.
+PAPI exposes 79 MCP tools to your assistant. The core loop is seven of them:
 
-**Core loop**
-- **orient** — one call returns the current cycle, what's in flight, and the recommended next action. Run it at the start of every session.
-- **setup** — scaffold PAPI onto a new project.
-- **plan** — break goals into a cycle of right-sized tasks, each with a build handoff your assistant can execute directly.
-- **build_list** — list the current cycle's tasks and their handoffs.
-- **build_execute** — start a task (creates a branch and handoff) and complete it (records the build report).
-- **review_list** / **review_submit** — surface finished builds and record accept / request-changes / reject verdicts.
-- **release** / **close_cycle** — finish the cycle, with a published version (`release`) or without one (`close_cycle`).
-- **tutorial_mode** — turn on short explanations and one clear next step in every reply. Handy for your first few cycles.
+- **orient**: the current cycle, what is in flight, and the next action. Run it at the start of every session.
+- **setup**: create a project, with its Product Brief, first decisions and conventions, and the workflow instructions your assistant follows. Teammates run **join** instead.
+- **plan**: turn the backlog into a cycle, with a build handoff for every task.
+- **build_execute**: start a task (branch, handoff, In Progress), then complete it with a build report.
+- **review_task**: the review brief for a task that is In Review. Read it before you decide.
+- **review_submit**: record the verdict: accept, request changes or reject. Your assistant or a teammate can run it.
+- **release**: a versioned release with a tag and a changelog entry. **close_cycle** finishes a cycle without a version.
 
-**Board and backlog**
-- **board_view** — read the project board and any task.
-- **board_edit** — change a task's status, cycle, priority, or notes.
-- **ad_hoc** — record quick work done outside the cycle so it shows in project history.
-- **idea** — capture a feature, bug, or research note into the backlog.
-- **bug** — file a bug against the board.
-
-**Strategy and intelligence**
-- **strategy_review** — step back every few cycles to check direction, not just velocity.
-- **strategy_change** — record an Active Decision, with supersede history.
-- **zoom_out** — a periodic retrospective across many cycles.
-
-**Docs and projects**
-- **doc_register** / **doc_search** — register and find project reference docs.
-- **project_list** / **project_switch** / **project_create** — manage multiple PAPI projects.
-
-**Teams**
-- **join** — join a project a teammate invited you to.
-- **contributor_list** / **contributor_add** — see and manage who works on the project.
+The rest covers sessions, teams, decisions, conventions, documents, bugs and strategy. [The full list](docs/tools.md) groups all 79 by job.
 
 ## Documentation
 
@@ -149,7 +129,8 @@ In this repo:
 | [llms.txt](llms.txt) | The agent runbook — point your AI at this (live version: [getpapi.ai/llms.txt](https://getpapi.ai/llms.txt)) |
 | [llms-install.md](llms-install.md) | Per-tool install instructions for AI assistants |
 | [docs/install.md](docs/install.md) | Install paths for every supported tool |
-| [docs/how-it-works.md](docs/how-it-works.md) | Cycles, handoffs, decisions, and how the pieces fit |
+| [docs/how-it-works.md](docs/how-it-works.md) | Cycles, handoffs, decisions, teams, and how the pieces fit |
+| [docs/tools.md](docs/tools.md) | Every MCP tool, grouped by job |
 | [docs/troubleshooting.md](docs/troubleshooting.md) | Connection problems, project routing, common fixes |
 
 Full documentation on the website — no account needed:
