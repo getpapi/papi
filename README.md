@@ -8,7 +8,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/getpapi/papi?style=flat&color=5a4b8a&logo=github&logoColor=white)](https://github.com/getpapi/papi)
 [![License](https://img.shields.io/github/license/getpapi/papi?color=5a4b8a)](LICENSE)
 
-**Vibe code as a team.**
+**End-to-end project management for AI builders.**
 
 Your AI starts every session from zero. Your project stays on course.
 
