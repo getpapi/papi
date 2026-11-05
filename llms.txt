@@ -1,6 +1,6 @@
 # PAPI
 
-> Vibe code as a team.
+> End-to-end project management for AI builders.
 
 PAPI keeps a shared plan, handoffs, decisions, conventions and review history for a project, so people and their AI tools can continue from the same agreed context. You do not need to be a developer to use it.
 
